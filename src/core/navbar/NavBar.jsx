@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimate } from "framer-motion";
+import { Tooltip } from "react-tooltip";
 
 import Logo from "../logo/Logo";
 import NavBarItems from "./nav_items/NavBarItems";
@@ -117,10 +118,42 @@ function NavBar({ isOpen, setIsOpen, isDarkMode, toggleTheme }) {
         >
           <div
             onClick={() => toggleTheme(!isDarkMode)}
-            className="rounded-xl px-2.5 py-1 flex items-center  hover:bg-accent-600/10 hover:dark:bg-accent-200/10"
+            role="button"
+            tabIndex={0}
+            aria-label="Toggle theme (keyboard shortcut: D)"
+            data-tooltip-id="theme-tooltip"
+            data-tooltip-place="bottom"
+            className="cursor-pointer rounded-xl px-2.5 py-1 flex items-center  hover:bg-accent-600/10 hover:dark:bg-accent-200/10"
           >
             <DarkModeSvg isDarkMode={isDarkMode} />
           </div>
+          <Tooltip
+            id="theme-tooltip"
+            opacity={1}
+            style={{
+              background: "#334155",
+              color: "#fff",
+              borderRadius: "8px",
+              padding: "6px 10px",
+              fontSize: "12px",
+              zIndex: 50,
+            }}
+          >
+            <span className="flex items-center gap-1.5">
+              Toggle theme
+              <kbd
+                style={{
+                  background: "rgba(255,255,255,0.2)",
+                  borderRadius: "4px",
+                  padding: "1px 6px",
+                  fontWeight: 700,
+                  fontFamily: "'Fira Code', monospace",
+                }}
+              >
+                D
+              </kbd>
+            </span>
+          </Tooltip>
           <a
             className="rounded-xl px-2.5 py-1 flex items-center  hover:bg-accent-600/10 hover:dark:bg-accent-200/10"
             href={Config.Twitter}

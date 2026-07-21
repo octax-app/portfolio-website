@@ -55,6 +55,10 @@ const App = {
       Title: "Quran",
       Path: `${GITHUB_ORG}/quran-app`,
     },
+    {
+      Title: "This Website",
+      Path: `${GITHUB_ORG}/portfolio-website`,
+    },
   ],
 
   // ===========================================================================
@@ -62,7 +66,7 @@ const App = {
   // ===========================================================================
   Home: {
     Hero: {
-      eyebrow: "Full-Stack Developer · Flutter & Laravel",
+      eyebrow: "Full-Stack Developer",
       greeting: "Hi, I'm Haitham",
       subtitle:
         "A full-stack developer building cross-platform mobile & web products — from the first sketch in Figma to a shipped, performant app.",
@@ -86,10 +90,9 @@ const App = {
         desc: "Optimized web & mobile. Fast, resource-friendly, and built to scale.",
       },
     ],
-    // TODO: adjust these numbers to your real figures.
     Stats: [
-      { value: "20+", label: "Projects shipped" },
-      { value: "5+", label: "Years of experience" },
+      { value: "25+", label: "Projects shipped" },
+      { value: "7+", label: "Years of experience" },
       { value: "6", label: "Languages supported" },
       { value: "100%", label: "Passion for craft" },
     ],
@@ -97,7 +100,7 @@ const App = {
       { title: "Mobile Apps", desc: "Cross-platform iOS & Android with Flutter.", to: "/work" },
       { title: "Web Apps", desc: "Full-stack dashboards & SaaS platforms.", to: "/work" },
       { title: "Websites", desc: "Fast, polished marketing sites & landing pages.", to: "/work" },
-      { title: "Libraries", desc: "Reusable open-source packages & tools.", to: "/work" },
+      { title: "AI Agents", desc: "Custom AI-driven assistants and automation agents.", to: "/work" },
     ],
     Cta: {
       title: "Let's build something clean, elegant & efficient.",
@@ -126,6 +129,7 @@ const App = {
             name: "SEA HORSE LINE",
             label: "seahorseline",
             hasDark: true,
+            screenshots: 14,
             tags: ["Flutter", "Laravel", "REST API", "6 Languages", "Dark Mode"],
             appStore: "https://apps.apple.com/app/id1450976739",
             playStore: "https://play.google.com/store/apps/details?id=com.seahorseline",
@@ -136,55 +140,50 @@ const App = {
             name: "Azzan Time",
             label: "azzantime",
             hasDark: false,
+            screenshots: 3,
             tags: ["Flutter", "Prayer Times", "Lifestyle"],
             appStore: "https://apps.apple.com/app/id6464369844",
             slug:
-              "an easy and accurate prayer-times companion. Track the five daily prayers (Fajr through Isha) based on your location and preferred Islamic calculation method, with a clean, customizable schedule...",
+              "Azzan Time is an advanced mobile application aimed at assisting Muslims around the world in easily and accurately tracking prayer times. The app provides prayer times for the five daily prayers based on the selected Islamic method and the user's location worldwide....",
           },
           {
             name: "Islamic Forum",
             label: "islamicforum",
             hasDark: false,
+            screenshots: 5,
             tags: ["Flutter", "Lifestyle", "Content"],
             appStore: "https://apps.apple.com/app/id6474943598",
             slug:
-              "the official app of the Islamic Forum — a specialized institution based in Sharjah. It offers lectures, courses, Quranic circles, and educational materials designed to promote a balanced Islamic culture across diverse communities...",
-          },
-          {
-            name: "Al Ain Club",
-            label: "alainclub",
-            hasDark: false,
-            tags: ["Flutter", "Sports", "News"],
-            appStore: "https://apps.apple.com/app/id1335896537",
-            playStore: "https://play.google.com/store/apps/details?id=com.alainclub",
-            slug:
-              "the official app for Al Ain Sports & Cultural Club. It delivers real-time news, photos, and match & player videos — bringing comprehensive club content together in one place...",
+              "the official app of the Islamic Forum — The Islamic Forum is a government institution specializing in Islamic culture, based in the Emirate of Sharjah. It strives to disseminate Islamic culture among diverse communities through a balanced approach...",
           },
           {
             name: "Al-Masar",
             label: "almasar",
             hasDark: false,
+            screenshots: 5,
             tags: ["Flutter", "Enterprise", "HR / Self-Service", "Push Notifications"],
             appStore: "https://apps.apple.com/app/id6479048658",
             slug:
-              "an employee self-service app — the gateway to seamless, efficient management of work tasks and requests. Integrated with the internal Almasar system, it lets staff apply for short leaves, late excuses, and salary certificates in a few taps, accept / reject / return requests in real time from anywhere, and stay informed with instant push notifications...",
+              "Al-Masar is the employee's gateway to seamless and efficient management of their work-related tasks and requests. Designed to integrate with the Almasar system, which powers our internal operations, this app empowers our employees to stay connected and productive on the go...",
           },
           {
             name: "EZ Card",
             label: "ezcard",
             hasDark: true,
+            screenshots: 3,
             tags: ["Flutter", "E-commerce", "Apple Pay", "Google Pay", "Dark Mode"],
             appStore: "https://apps.apple.com/app/id1621571791",
             slug:
-              "a cutting-edge cross-platform e-commerce provide digital store cards. This dynamic application offers users a seamless shopping experience with an elegant dark mode interface. It boasts many secure payment methods including Apple Pay and Google Pay, allowing customers to pay with ease...",
+              "Buy your favorite digital gift cards instantly with EZ Card. Whether you're gaming, shopping, or purchasing digital content, EZ Card provides a fast, secure, and hassle-free experience...",
           },
           {
             name: "FANAJEEN",
             label: "fanajeen",
             hasDark: false,
+            screenshots: 3,
             tags: ["Flutter", "E-commerce", "UI/UX"],
             slug:
-              "a sleek cross-platform e-commerce app, tailored for those who have a deep passion for coffee cups and it's accessories. With a user-friendly interface and seamless navigation, FANAJEEN makes shopping for your favorite coffee-related items a breeze...",
+              "a sleek cross-platform e-commerce app, tailored for those who have a deep passion for coffee cups and it's accessories. With a user-friendly interface and seamless navigation...",
           },
         ],
       },
@@ -194,22 +193,30 @@ const App = {
         subtitle: "Marketing sites & landing pages built for speed and polish.",
         layout: "cards",
         projects: [
-          // TODO: replace these placeholders with your real websites.
           {
-            name: "Project Website",
-            label: "website-one",
-            placeholder: true,
+            name: "My Portfolio",
+            label: "websites/portfolio",
+            placeholder: false,
             tags: ["React", "Tailwind CSS", "Vite"],
-            href: GITHUB_ORG,
+            href: 'https://octax.cloud',
             slug:
-              "A fast, responsive marketing site. Replace this entry with a real project — add a screenshot at /static/images/work/website-one/thumb.png.",
+              "A fast, responsive marketing site. Replace this entry with a real project.",
           },
           {
-            name: "Landing Page",
-            label: "website-two",
-            placeholder: true,
+            name: "Sea Horse Line",
+            label: "websites/seahorseline",
+            placeholder: false,
+            tags: ["React", "Tailwind CSS", "Vite"],
+            href: 'https://seahorseline.com',
+            slug:
+              "A fast, responsive marketing site. Replace this entry with a real project.",
+          },
+          {
+            name: "Rebal Exchange",
+            label: "websites/rebal",
+            placeholder: false,
             tags: ["HTML", "CSS", "JavaScript"],
-            href: GITHUB_ORG,
+            href: "https://rebal.online/",
             slug:
               "A conversion-focused landing page. Swap in your own details, tags, and link.",
           },
@@ -221,24 +228,23 @@ const App = {
         subtitle: "Full-stack dashboards & SaaS built end-to-end.",
         layout: "cards",
         projects: [
-          // TODO: replace these placeholders with your real web apps.
           {
-            name: "Admin Dashboard",
-            label: "webapp-one",
-            placeholder: true,
+            name: "OctaX ERP",
+            label: "webapps/octax_erp",
+            placeholder: false,
             tags: ["Laravel", "React", "MySQL"],
-            href: GITHUB_ORG,
+            href: '#private',
             slug:
-              "A full-stack admin dashboard with authentication, roles, and reporting. Replace with a real project.",
+              "A full-stack admin dashboard with authentication, roles, and modules system. real-time, AI chat...",
           },
           {
-            name: "SaaS Platform",
-            label: "webapp-two",
-            placeholder: true,
-            tags: ["React", "REST API", "Stripe"],
-            href: GITHUB_ORG,
+            name: "Mocha Exchange",
+            label: "webapps/rebal",
+            placeholder: false,
+            tags: ["Laravel", "React", "REST API"],
+            href: '#private',
             slug:
-              "A multi-tenant SaaS platform with subscriptions and billing. Swap in your own details.",
+              "A full-stack admin dashboard for currency exchange, with real-time currency exchange values...",
           },
         ],
       },
@@ -248,15 +254,15 @@ const App = {
         subtitle: "Reusable open-source packages I build and maintain.",
         layout: "cards",
         projects: [
-          // TODO: replace these placeholders with your real packages.
           {
-            name: "octax_ui",
-            label: "library-one",
-            placeholder: true,
+            name: "hot-date-react",
+            label: "libs/hot-date-react",
+            placeholder: false,
+            price: 0, // 0 → shown as "Free"
             tags: ["Flutter", "Package", "Open Source"],
-            href: GITHUB_ORG,
+            href: "https://www.npmjs.com/package/@octax-app/hot-date-react",
             slug:
-              "A Flutter UI kit of reusable widgets. Replace with a real package and link it to pub.dev / GitHub.",
+              "React wrapper for @stolinski/hot-date — a natural language date input web component.",
           },
         ],
       },
@@ -369,9 +375,9 @@ const App = {
       "A short timeline of the roles and projects that shaped how I build products today.",
     Timeline: [
       {
-        role: "Senior Full-Stack Developer",
-        company: "Company Name", // TODO
-        period: "2023 — Present",
+        role: "Freelance Developer",
+        company: "Self-employed", 
+        period: "2025 — Present",
         location: "Remote · UAE",
         current: true,
         summary:
@@ -385,9 +391,9 @@ const App = {
         placeholder: true,
       },
       {
-        role: "Full-Stack Developer",
-        company: "Company Name", // TODO
-        period: "2021 — 2023",
+        role: "Senior Full-Stack Developer",
+        company: "Marhaba Group",
+        period: "2024 - 2025",
         location: "On-site",
         summary:
           "Replace with what you did here — the systems you built and the problems you solved.",
@@ -399,10 +405,10 @@ const App = {
         placeholder: true,
       },
       {
-        role: "Freelance Developer",
-        company: "Self-employed", // TODO
-        period: "2019 — 2021",
-        location: "Remote",
+        role: "Senior Full-Stack Developer",
+        company: "MacBerry Technologies",
+        period: "2019 — 2024",
+        location: "On-site",
         summary:
           "Replace with your freelance story — the clients you helped and what you learned.",
         highlights: [

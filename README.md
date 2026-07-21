@@ -5,7 +5,7 @@ The personal portfolio of **Haitham Al-Abdullah**, a full-stack developer, and t
 🔗 **Live:** [octax.cloud](https://octax.cloud)
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?logo=tailwindcss&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 
@@ -25,7 +25,7 @@ The personal portfolio of **Haitham Al-Abdullah**, a full-stack developer, and t
 | Area | Tooling |
 |------|---------|
 | Framework | [React 18](https://react.dev) |
-| Build tool | [Vite 5](https://vitejs.dev) |
+| Build tool | [Vite 8](https://vitejs.dev) |
 | Styling | [Tailwind CSS 3](https://tailwindcss.com) |
 | Routing | [React Router 6](https://reactrouter.com) |
 | Animation | [Framer Motion](https://www.framer.com/motion/) |
@@ -33,7 +33,7 @@ The personal portfolio of **Haitham Al-Abdullah**, a full-stack developer, and t
 
 ## 🚀 Getting Started
 
-**Prerequisites:** [Node.js](https://nodejs.org) 18+ and npm.
+**Prerequisites:** [Node.js](https://nodejs.org) 20.19+ or 22.12+ (required by Vite 8) and npm.
 
 ```bash
 # 1. Clone
@@ -62,7 +62,7 @@ src/
 ├── config/
 │   └── AppConfig.js      # 👈 single source of truth for ALL content
 ├── core/                 # app shell: routing, navbar, footer
-│   ├── App.js
+│   ├── App.jsx
 │   ├── navbar/
 │   └── footer/
 ├── pages/
@@ -73,7 +73,7 @@ src/
 │   └── studio/           # Octax studio / brand
 ├── shared/               # reusable UI (PageHeader, Reveal, Badge, cards…)
 ├── index.css             # Tailwind entry + fonts
-└── index.js              # app entry
+└── index.jsx             # app entry (all components use .jsx; config stays .js)
 public/
 └── static/images/        # home & work screenshots
 ```
