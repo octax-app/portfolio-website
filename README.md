@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+# Octax — Portfolio Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The personal portfolio of **Haitham Al-Abdullah**, a full-stack developer, and the home of the **Octax** studio brand. A clean, elegant, and efficient single-page app showcasing published mobile apps, web work, skills, experience, and services.
 
-## Available Scripts
+🔗 **Live:** [octax.cloud](https://octax.cloud)
 
-In the project directory, you can run:
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?logo=tailwindcss&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✨ Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Card-based, responsive design** with light & dark modes (respects system preference, toggleable).
+- **Config-driven content** — every page reads from a single file (`src/config/AppConfig.js`); no need to touch components to update copy.
+- **Categorized work** — Mobile Apps, Websites, Web Apps, Libraries, and Community Projects.
+- **Multi-store links** — App Store, Google Play, and Huawei AppGallery buttons that appear only when a link is provided.
+- **Smooth motion** — scroll-reveal animations via Framer Motion and a Swiper-powered app screenshot gallery.
+- **Graceful image fallbacks** — missing screenshots render a tidy "preview coming soon" placeholder.
 
-### `npm test`
+## 🧱 Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Area | Tooling |
+|------|---------|
+| Framework | [React 18](https://react.dev) |
+| Build tool | [Vite 5](https://vitejs.dev) |
+| Styling | [Tailwind CSS 3](https://tailwindcss.com) |
+| Routing | [React Router 6](https://reactrouter.com) |
+| Animation | [Framer Motion](https://www.framer.com/motion/) |
+| Carousel | [Swiper](https://swiperjs.com) |
 
-### `npm run build`
+## 🚀 Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Prerequisites:** [Node.js](https://nodejs.org) 18+ and npm.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# 1. Clone
+git clone https://github.com/octax-app/website.git
+cd website
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 2. Install dependencies
+npm install
 
-### `npm run eject`
+# 3. Start the dev server (http://localhost:3000)
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Scripts
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Command | Description |
+|---------|-------------|
+| `npm start` / `npm run dev` | Start the Vite dev server with hot reload |
+| `npm run build` | Build for production into `build/` |
+| `npm run preview` | Preview the production build locally |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📁 Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+src/
+├── config/
+│   └── AppConfig.js      # 👈 single source of truth for ALL content
+├── core/                 # app shell: routing, navbar, footer
+│   ├── App.js
+│   ├── navbar/
+│   └── footer/
+├── pages/
+│   ├── home/             # card-based landing page
+│   ├── work/             # categorized projects + app detail gallery
+│   ├── skills/           # Skills & Tools
+│   ├── experience/       # Experience timeline
+│   └── studio/           # Octax studio / brand
+├── shared/               # reusable UI (PageHeader, Reveal, Badge, cards…)
+├── index.css             # Tailwind entry + fonts
+└── index.js              # app entry
+public/
+└── static/images/        # home & work screenshots
+```
 
-## Learn More
+## 🛠️ Customizing Content
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+All content lives in **`src/config/AppConfig.js`**. Edit that one file to update the site:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **`Home`** — hero copy, feature cards, stats, and CTA.
+- **`Work.Categories`** — projects grouped by category. Each project supports `name`, `slug`, `tags`, and store links.
+- **`Skills`** — favorite stack icons and grouped skill badges.
+- **`Experience`** — the career timeline.
+- **`Studio`** — the Octax brand: services, process, and values.
+- Global bits like `Github`, `Twitter`, `Website`, and footer links.
 
-### Code Splitting
+### Adding store links
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Add any of these fields to a project to make its store button appear (buttons render only when a link exists):
 
-### Analyzing the Bundle Size
+```js
+{
+  name: "Sea Horse Line",
+  label: "seahorseline",
+  appStore:    "https://apps.apple.com/app/id1450976739",
+  playStore:   "https://play.google.com/store/apps/details?id=com.seahorseline",
+  huaweiStore: "https://appgallery.huawei.com/app/CXXXXXXX",
+  // ...
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Adding project screenshots
 
-### Making a Progressive Web App
+Drop images into `public/static/images/work/<label>/` using this naming pattern (where `<label>` matches the project's `label` in the config):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+screenshot_1_light.png   screenshot_2_light.png   screenshot_3_light.png
+screenshot_1_dark.png    screenshot_2_dark.png    screenshot_3_dark.png   # only if hasDark: true
+```
 
-### Advanced Configuration
+Until images are added, cards show a graceful placeholder automatically.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📦 Deployment
 
-### Deployment
+`npm run build` outputs a static site to `build/`. Deploy the folder to any static host (Vercel, Netlify, Cloudflare Pages, GitHub Pages, etc.). It's a single-page app, so configure your host to rewrite all routes to `index.html`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📄 License
 
-### `npm run build` fails to minify
+Released under the [MIT License](LICENSE). The code is free to use; the personal content, brand assets, and imagery (Octax, app screenshots) remain the property of their owner.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+Crafted with ♥ by Haitham — [octax.cloud](https://octax.cloud) · [@octax-app](https://github.com/octax-app)
