@@ -1,19 +1,19 @@
 import Hero from "./components/hero/Hero";
-import InfoCards from "./components/info_cards/InfoCards";
-import Slug from "./components/big_slug/Slug";
-import FirstSection from "./components/sections/FirstSection";
-import SecondSection from "./components/sections/SecondSection";
-import ThirdSection from "./components/sections/ThirdSection";
+import FeatureCards from "./components/feature_cards/FeatureCards";
+import StatsBand from "./components/stats/StatsBand";
+import BuildCards from "./components/build/BuildCards";
+import StackCard from "./components/stack/StackCard";
+import CtaCard from "./components/cta/CtaCard";
 
 function Home() {
   return (
-    <div className="Home ">
+    <div className="Home pb-24">
       <Hero />
-      <InfoCards/>
-      <Slug />
-      <FirstSection />
-      <SecondSection />
-      <ThirdSection />
+      <FeatureCards />
+      <StatsBand />
+      <BuildCards />
+      <StackCard />
+      <CtaCard />
     </div>
   );
 }

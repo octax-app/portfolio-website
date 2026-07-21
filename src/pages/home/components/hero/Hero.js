@@ -1,140 +1,92 @@
-
-import { motion, stagger } from "framer-motion";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import HelloSvg from "./hero_svgs/HelloSvg";
-import HeroSvg from "./hero_svgs/HeroSvg";
-import StackSvg from "./hero_svgs/StackSvg";
+import CodeWindow from "./CodeWindow";
 
-import {App} from '../../../../config/AppConfig';
-
-const style = {
-  borderBottom: "2px solid transparent",
-  borderImage:
-    "linear-gradient(0.25turn, #00000000, var(--secondary), #00000000)",
-  borderImageSlice: 1,
-};
+import { App as Config } from "../../../../config/AppConfig";
 
 function Hero() {
+  const { Hero: hero } = Config.Home;
+  const whatsapp = `https://wa.me/${Config.AboutMe.PhoneNumber}`;
+
   return (
-    <div className="flex justify-center md:h-[423px] ">
-      <div
-        className="max-w-[944px] w-full flex items-end"
-        style={style}
-      >
-        <HeroText />
-        <HeroSvg />
+    <section className="flex justify-center mt-8 md:mt-14 px-7 md:px-5 lg:px-0">
+      <div className="max-w-[944px] w-full">
+        <div className="rounded-[2rem] border-2 border-accent-200 dark:border-accent-700 bg-accent-50 dark:bg-accent-800 shadow-xl shadow-accent-200/40 dark:shadow-black/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 p-7 sm:p-10 md:p-12 items-center">
+            {/* Text */}
+            <div className="plus-font order-2 md:order-1 text-center md:text-left">
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="text-xs font-bold uppercase tracking-[0.15em] text-blue-500 dark:text-primary mb-3"
+              >
+                {hero.eyebrow}
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center justify-center md:justify-start gap-2 text-[22px] text-accent-600 dark:text-accent-300"
+              >
+                {hero.greeting} <HelloSvg />
+              </motion.p>
+
+              <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mt-2 text-4xl md:text-[42px] font-black leading-tight text-accent-700 dark:text-accent-200"
+              >
+                I craft <span style={{ color: "#f0b429" }}>clean</span>,{" "}
+                <span style={{ color: "#ff8478" }}>elegant</span> &{" "}
+                <span style={{ color: "#5f6cf1" }}>efficient</span> apps.
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-4 text-accent-600 dark:text-accent-400"
+              >
+                {hero.subtitle}
+              </motion.p>
+
+              <div className="flex flex-wrap gap-3 mt-7 justify-center md:justify-start">
+                <motion.a
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  whileTap={{ scale: 0.95 }}
+                  href={whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-7 py-2.5 rounded-full bg-accent-700 dark:bg-primary text-white font-semibold hero-button"
+                >
+                  {hero.primaryCta}
+                </motion.a>
+                <Link
+                  to="/work"
+                  onClickCapture={() => window.scrollTo({ top: 0, left: 0 })}
+                  className="px-7 py-2.5 rounded-full border-2 border-accent-300 dark:border-accent-600 text-accent-700 dark:text-accent-200 font-semibold hover:bg-accent-200 dark:hover:bg-accent-700/60 transition-colors"
+                >
+                  {hero.secondaryCta}
+                </Link>
+              </div>
+            </div>
+
+            {/* Visual */}
+            <div className="order-1 md:order-2">
+              <CodeWindow />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
 export default Hero;
-
-const pVariants = {
-  open: {
-    opacity: 1,
-    transform: "translate(0%, 0%)",
-    transition: {
-      duration: 0.5,
-      stagger: stagger(0.5),
-    },
-  },
-  closed: {
-    opacity: 0,
-    transform: "translate(0%, -30%)",
-    transition: {
-      duration: 0.5,
-      stagger: stagger(0.0),
-    },
-  },
-};
-
-function HeroText() {
-  return (
-    <div className="w-full h-full flex flex-col text-accent-700 dark:text-accent-300 justify-between items-center md:items-start plus-font px-0 md:px-5">
-      <div className="flex flex-col items-center md:items-start">
-        <motion.p
-          variants={pVariants}
-          initial="closed"
-          animate="open"
-          className="leading-none text-[25px] mt-20 flex gap-2 items-center"
-        >
-          Hi <HelloSvg />
-        </motion.p>
-        <motion.p
-          variants={pVariants}
-          initial="closed"
-          animate="open"
-          className="text-[40px] font-extrabold "
-        >
-          I’m <span className="dark:text-primary">{"Haitham"}</span>,
-        </motion.p>
-        <motion.p
-          variants={pVariants}
-          initial="closed"
-          animate="open"
-          className="px-20 md:px-0 text-center md:text-start text-xl"
-        >
-          a{" "}
-          <span className="font-bold dark:text-primary dark:font-semibold">
-            {" "}
-            Full-stack developer
-          </span>
-          , who can craft a
-          <span className="font-bold dark:text-primary dark:font-semibold">
-            {" "}
-            Clean
-          </span>
-          ,
-          <span className="font-bold dark:text-primary dark:font-semibold">
-            {" "}
-            Elegant
-          </span>
-          , &
-          <span className="font-bold dark:text-primary dark:font-semibold">
-            {" "}
-            Efficient{" "}
-          </span>
-          Web & Mobile Applications
-        </motion.p>
-      </div>
-
-      <motion.a
-        className="px-10 py-2.5 mt-5 rounded-full  w-fit bg-accent-700 dark:bg-primary text-white font-normal text-[18px] hero-button cursor-pointer select-none"
-        initial={{ scale: 0.0 }}
-        animate={{ scale: 1.0 }}
-        whileTap={{ scale: 0.95 }}
-        href={`https://wa.me/${App.AboutMe.PhoneNumber}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {"Get in Touch"}
-      </motion.a>
-      <div>
-        <motion.p
-          variants={pVariants}
-          initial="closed"
-          animate="open"
-          className="mt-5 text-lg"
-        >
-          {"Current favorite tech stack/tools:"}
-        </motion.p>
-        <motion.div
-          variants={pVariants}
-          initial="closed"
-          animate="open"
-          className="mt-2 mb-1 flex gap-4 items-center"
-        >
-          <StackSvg type={"flutter"} onHoverColor={"#00D0FF"} />
-          <StackSvg type={"laravel"} onHoverColor={"#f34f43ff"} />
-          <StackSvg type={"react"} onHoverColor={"#61dbfbff"} />
-          <StackSvg type={"bootstrap"} onHoverColor={"#573e7fff"} />
-          <StackSvg type={"tailwind"} onHoverColor={"#38bdf8ff"} />
-          <StackSvg type={"line"} onHoverColor={"#94A3B8"} />
-          <StackSvg type={"vscode"} onHoverColor={"#1f9cf0ff"} />
-          <StackSvg type={"figma"} onHoverColor={"#ad00ffff"} />
-        </motion.div>
-      </div>
-    </div>
-  );
-}

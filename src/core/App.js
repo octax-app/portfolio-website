@@ -12,6 +12,9 @@ import Footer from "./footer/Footer";
 import Home from "../pages/home/Home";
 import Work from "../pages/work/Work";
 import AppDetails from "../pages/work/app_details/AppDetails";
+import SkillsTools from "../pages/skills/SkillsTools";
+import Experience from "../pages/experience/Experience";
+import Studio from "../pages/studio/Studio";
 
 import {App as Config} from '../config/AppConfig';
 
@@ -83,11 +86,10 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/work" element={<Work />} />
-            <Route
-              exact
-              path="/work/:app"
-              element={<AppDetails />}
-            />
+            <Route exact path="/work/:app" element={<AppDetails />} />
+            <Route exact path="/skills-tools" element={<SkillsTools />} />
+            <Route exact path="/experience" element={<Experience />} />
+            <Route exact path="/studio" element={<Studio />} />
           </Routes>
         </div>
       </div>
