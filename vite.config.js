@@ -1,9 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// The source files use the .js extension but contain JSX (a legacy of the
-// Create React App setup). esbuild only treats .jsx/.tsx as JSX by default,
-// so we tell it to parse .js files in src/ as JSX as well.
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -13,16 +10,11 @@ export default defineConfig({
   build: {
     outDir: "build",
   },
-  esbuild: {
-    loader: "jsx",
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        ".js": "jsx",
-      },
-    },
+  // Workaround for a Vite 8 dev-server bug where these internal client
+  // constants are served unreplaced, causing a browser ReferenceError.
+  // See https://github.com/vitejs/vite/issues/22419
+  define: {
+    __BUNDLED_DEV__: "false",
+    __SERVER_FORWARD_CONSOLE__: "false",
   },
 });
