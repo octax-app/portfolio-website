@@ -346,6 +346,7 @@ const App = {
           "MySQL",
           "Authentication",
           "Payment Gateways",
+          "AI Agents",
         ],
       },
       {
