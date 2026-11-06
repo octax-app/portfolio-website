@@ -1,73 +1,78 @@
 import { Link } from "react-router-dom";
 
 import Badge from "./Badge";
-import FallbackImage from "./FallbackImage";
+import Icon from "./Icon";
+import ProgressBar from "./ProgressBar";
+import ProjectLinks from "./ProjectLinks";
+import ProjectThumb from "./ProjectThumb";
+import { OpenSourcePill, StatusPill } from "./StatusPill";
+import { progressOf } from "../config/AppConfig";
 
-// Compact project card used for the "cards" layout (websites / web apps / libraries).
+const KIND_LABEL = {
+  platform: "Product",
+  mobile: "Mobile app",
+  webapp: "Web app",
+  website: "Website",
+  library: "Library",
+  community: "Community",
+};
+
+// Catalog card: preview, status, short pitch, stack, progress (if tracked) and links.
 function ProjectCard({ project }) {
-  const { name, slug, label, tags = [], href, thumb, placeholder, price } =
-    project;
+  const { id, name, tagline, tags = [], status, openSource, tone } = project;
+  const progress = progressOf(project);
+  const inProgress = (project.milestones || []).some((m) => m.state !== "done");
 
-  const card = (
-    <div className="flex flex-col h-full overflow-hidden transition-all duration-300 border-2 group rounded-3xl border-accent-200 dark:border-accent-700 bg-accent-50 dark:bg-accent-800 hover:-translate-y-1 hover:border-blue-400 dark:hover:border-primary hover:shadow-lg hover:shadow-accent-200/50 dark:hover:shadow-black/30">
-      <FallbackImage
-        src={thumb || (label ? `/static/images/work/${label}.png` : undefined)}
-        alt={name}
-        label={name}
-        className="object-cover w-full h-40"
-        wrapperClassName="w-full h-40 rounded-none border-0"
-      />
-      <div className="flex flex-col flex-1 gap-2 p-5">
-        <div className="flex items-center justify-between gap-2">
-          <h3 className="text-lg font-black text-accent-700 dark:text-accent-300">
-            {name}
-          </h3>
-          <div className="flex items-center gap-2 shrink-0">
-            {price !== undefined && (
-              <span
-                className={`rounded-full text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ${
-                  price === 0
-                    ? "bg-emerald-400/20 text-emerald-600 dark:text-emerald-400"
-                    : "bg-blue-400/20 text-blue-600 dark:text-primary"
-                }`}
-              >
-                {price === 0 ? "Free" : `$${price}`}
-              </span>
-            )}
-            {placeholder && (
-              <span className="rounded-full bg-amber-400/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
-                Draft
-              </span>
-            )}
-          </div>
+  return (
+    <article className="clay clay-hover group relative flex h-full flex-col p-3">
+      <ProjectThumb project={project} />
+
+      <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <StatusPill status={status} />
+          {openSource && <OpenSourcePill state={openSource} />}
         </div>
-        <p className="flex-1 text-sm text-accent-600 dark:text-accent-400">
-          {slug}
+
+        <h3 className="mt-3 text-xl font-black text-ink">
+          {/* stretched link → whole card opens the detail page */}
+          <Link
+            to={`/work/${id}`}
+            onClickCapture={() => window.scrollTo({ top: 0, left: 0 })}
+            className="after:absolute after:inset-0 after:rounded-[32px] focus-visible:outline-none"
+          >
+            {name}
+          </Link>
+        </h3>
+        <p className="mt-1 text-xs font-bold uppercase tracking-wider text-muted">
+          {KIND_LABEL[project.kind]}
         </p>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {tags.map((t) => (
+        <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{tagline}</p>
+
+        {inProgress && progress !== null && (
+          <div className="mt-4">
+            <ProgressBar value={progress} tone={tone} label="Roadmap" height="h-3" />
+          </div>
+        )}
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {tags.slice(0, 4).map((t) => (
             <Badge key={t}>{t}</Badge>
           ))}
+          {tags.length > 4 && <Badge>+{tags.length - 4}</Badge>}
+        </div>
+
+        <div className="relative z-10 mt-5 flex items-center justify-between gap-3">
+          <ProjectLinks project={project} compact onlyPrimary />
+          <span
+            className={`tone-${tone} ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full clay-soft tone-text transition-transform duration-300 ease-spring group-hover:translate-x-1`}
+            aria-hidden="true"
+          >
+            <Icon name="arrow" size={18} strokeWidth={2.5} />
+          </span>
         </div>
       </div>
-    </div>
+    </article>
   );
-
-  if (href) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer" className="block h-full">
-        {card}
-      </a>
-    );
-  }
-  if (label) {
-    return (
-      <Link to={`/work/${label}`} className="block h-full">
-        {card}
-      </Link>
-    );
-  }
-  return card;
 }
 
 export default ProjectCard;

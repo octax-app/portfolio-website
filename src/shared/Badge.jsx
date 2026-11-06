@@ -1,15 +1,16 @@
-// Small tech / tag chip.
-function Badge({ children, tone = "default" }) {
-  const tones = {
-    default:
-      "bg-accent-200 dark:bg-accent-700/60 text-accent-600 dark:text-accent-300",
-    primary:
-      "bg-blue-500/10 dark:bg-primary/20 text-blue-600 dark:text-primary",
-  };
+// Small tech / tag chip. Pass a `tone` for a coloured chip.
+function Badge({ children, tone }) {
+  if (tone) {
+    return (
+      <span
+        className={`tone-${tone} clay-soft inline-flex items-center rounded-full px-3 py-1 text-xs font-bold tone-text`}
+      >
+        {children}
+      </span>
+    );
+  }
   return (
-    <span
-      className={`inline-flex items-center rounded-full text-xs font-semibold px-3 py-1 ${tones[tone]}`}
-    >
+    <span className="inline-flex items-center rounded-full bg-sunken px-3 py-1 text-xs font-semibold text-muted">
       {children}
     </span>
   );

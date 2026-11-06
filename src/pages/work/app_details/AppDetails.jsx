@@ -1,26 +1,63 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCards, Navigation } from "swiper/modules";
-
+import { Autoplay, EffectCards } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cards";
-
 import "./AppDetails.css";
 
-import { App as Config } from "../../../config/AppConfig";
+import { App as Config, findProject } from "../../../config/AppConfig";
+import { graph, projectLd } from "../../../config/seo";
 import Badge from "../../../shared/Badge";
-import FallbackImage from "../../../shared/FallbackImage";
-import StoreLinks from "../components/app_section/StoreLinks";
+import Gallery from "../../../shared/Gallery";
+import Icon from "../../../shared/Icon";
+import PipelineCard from "../../../shared/PipelineCard";
+import ProjectCard from "../../../shared/ProjectCard";
+import ProjectLinks from "../../../shared/ProjectLinks";
+import ProjectThumb, { shotSrc } from "../../../shared/ProjectThumb";
+import Reveal from "../../../shared/Reveal";
+import { Container, Section, SectionHeading } from "../../../shared/Section";
+import Seo from "../../../shared/Seo";
+import { OpenSourcePill, StatusPill } from "../../../shared/StatusPill";
+import useIsDark from "../../../shared/useIsDark";
 
-// Find a project anywhere in the Work config by its `label` (the URL segment).
-function findProject(label) {
-  for (const category of Config.Work.Categories) {
-    const match = (category.projects || []).find((p) => p.label === label);
-    if (match) return match;
-  }
-  return null;
+function Screens({ project }) {
+  const isDark = useIsDark();
+  const { id, name, screenshots, hasDark } = project;
+  const slides = Array.from({ length: screenshots }, (_, i) => shotSrc(id, i + 1, hasDark && isDark));
+
+  return (
+    <Section className="!mt-16">
+      <SectionHeading eyebrow="Screens" tone={project.tone} title="A look inside." />
+      <div className="mt-8 hidden md:block">
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={28}
+          breakpoints={{ 1024: { slidesPerView: 4, spaceBetween: 32 } }}
+          autoplay={{ delay: 2200, disableOnInteraction: false }}
+          modules={[Autoplay]}
+          className="!overflow-visible !pb-6"
+        >
+          {slides.map((src, i) => (
+            <SwiperSlide key={src}>
+              <img src={src} alt={`${name} screen ${i + 1}`} loading="lazy" className="w-full rounded-[28px] shadow-xl" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <div className="mt-8 flex justify-center md:hidden">
+        <Swiper className="myswiper" effect="cards" grabCursor autoplay={{ delay: 2200, disableOnInteraction: false }} modules={[Autoplay, EffectCards]}>
+          {slides.map((src, i) => (
+            <SwiperSlide key={src}>
+              <img src={src} alt={`${name} screen ${i + 1}`} loading="lazy" className="w-full rounded-[22px]" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </Section>
+  );
 }
 
 function AppDetails() {
@@ -31,120 +68,94 @@ function AppDetails() {
     window.scrollTo({ top: 0, left: 0 });
   }, [app]);
 
-  // Unknown label (e.g. /work/xxx) — send the visitor back to the Work page.
-  if (!project) {
-    return <Navigate to="/work" replace />;
-  }
+  const related = useMemo(
+    () =>
+      project
+        ? Config.Catalog.filter((p) => p.id !== project.id && p.kind === project.kind).slice(0, 3)
+        : [],
+    [project],
+  );
+  const jsonLd = useMemo(() => (project ? graph(projectLd(project)) : null), [project]);
 
-  const {
-    name,
-    slug,
-    tags = [],
-    hasDark,
-    screenshots = 0,
-    appStore,
-    playStore,
-    huaweiStore,
-  } = project;
+  // Unknown id → back to the catalog
+  if (!project) return <Navigate to="/work" replace />;
 
-  // Build one slide per screenshot the project actually has (see `screenshots`
-  // in AppConfig). Light variants always; dark ones only when `hasDark`.
-  const shot = (i, variant) =>
-    `/static/images/work/apps/${app}/screenshot_${i}_${variant}.webp`;
-  const range = Array.from({ length: screenshots }, (_, i) => i + 1);
-  const slides = range
-    .map((i) => shot(i, "light"))
-    .concat(hasDark ? range.map((i) => shot(i, "dark")) : []);
+  const { name, tagline, desc, tags = [], tone, status, openSource, milestones } = project;
 
   return (
-    <div className="flex justify-center my-12">
-      <div className="max-w-[944px] w-full select-none px-7 md:px-5 lg:px-0">
+    <div className="AppDetails">
+      <Seo title={name} description={`${name}: ${tagline} ${desc}`.slice(0, 300)} jsonLd={jsonLd} />
+
+      <Container className="mt-6 md:mt-10">
         <Link
           to="/work"
-          className="inline-flex items-center gap-1 text-sm font-semibold transition-colors text-accent-500 hover:text-blue-500 dark:hover:text-primary"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-3 font-display text-sm font-extrabold text-muted hover:text-ink"
         >
-          ← Back to Work
+          <Icon name="arrow" size={16} strokeWidth={2.5} className="rotate-180" /> Back to work
         </Link>
 
-        <h1 className="mt-4 text-3xl font-black md:text-4xl text-accent-700 dark:text-accent-300">
-          {name}
-        </h1>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 240, damping: 24 }}
+          className={`tone-${tone} clay mt-3 grid grid-cols-1 items-center gap-8 !rounded-[40px] p-6 sm:p-10 lg:grid-cols-[1.2fr_1fr]`}
+        >
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <StatusPill status={status} size="md" />
+              {openSource && <OpenSourcePill state={openSource} />}
+            </div>
+            <h1 className="mt-4 text-4xl font-black leading-tight text-ink md:text-6xl">{name}</h1>
+            <p className="mt-3 font-display text-xl font-extrabold tone-text">{tagline}</p>
+            <p className="mt-4 text-lg leading-relaxed text-muted">{desc}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {tags.map((t) => (
+                <Badge key={t}>{t}</Badge>
+              ))}
+            </div>
+            <div className="mt-7">
+              <ProjectLinks project={project} />
+            </div>
+          </div>
+          <ProjectThumb project={project} height="h-72 md:h-80" />
+        </motion.div>
+      </Container>
 
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {tags.map((t) => (
-              <Badge key={t}>{t}</Badge>
+      {project.screenshots > 0 && <Screens project={project} />}
+
+      {project.gallery?.length > 0 && (
+        <Section className="!mt-16">
+          <SectionHeading
+            eyebrow="Screenshots"
+            tone={tone}
+            title="A look inside."
+            subtitle={`${project.gallery.length} screen${project.gallery.length > 1 ? "s" : ""}. Click any to enlarge.`}
+          />
+          <div className="mt-8">
+            <Gallery project={project} />
+          </div>
+        </Section>
+      )}
+
+      {milestones?.length > 0 && (
+        <Section className="!mt-16">
+          <SectionHeading eyebrow="Roadmap" tone={tone} title="Where it's at." />
+          <Reveal className="mt-8 max-w-2xl">
+            <PipelineCard project={project} />
+          </Reveal>
+        </Section>
+      )}
+
+      {related.length > 0 && (
+        <Section className="!mt-20">
+          <SectionHeading eyebrow="More like this" tone="pink" title="Keep exploring." />
+          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProjectCard key={p.id} project={p} />
             ))}
           </div>
-        )}
-
-        {slug && (
-          <p className="max-w-2xl mt-4 text-lg text-accent-600 dark:text-accent-400">
-            {slug}
-          </p>
-        )}
-
-        {(appStore || playStore || huaweiStore) && (
-          <div className="flex flex-wrap items-center gap-3 mt-5">
-            <StoreLinks
-              appStore={appStore}
-              playStore={playStore}
-              huaweiStore={huaweiStore}
-            />
-          </div>
-        )}
-
-        {slides.length > 0 && (
-          <>
-            <div className="hidden mt-10 md:block">
-              <Swiper
-                slidesPerView={1}
-                lazy
-                breakpoints={{
-                  640: { slidesPerView: 2, spaceBetween: 20 },
-                  768: { slidesPerView: 3, spaceBetween: 30 },
-                }}
-                autoplay={{ delay: 1500, disableOnInteraction: false }}
-                modules={[Autoplay, Navigation]}
-              >
-                {slides.map((src, i) => (
-                  <SwiperSlide key={src}>
-                    <FallbackImage
-                      src={src}
-                      alt={`${name} screenshot ${i + 1}`}
-                      label={name}
-                      className="w-full h-auto rounded-2xl"
-                      wrapperClassName="w-full aspect-[9/19]"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-
-            <div className="block mt-10 md:hidden">
-              <Swiper
-                className="myswiper"
-                effect={"cards"}
-                grabCursor={true}
-                autoplay={{ delay: 1500, disableOnInteraction: false }}
-                modules={[Autoplay, EffectCards]}
-              >
-                {slides.map((src, i) => (
-                  <SwiperSlide key={src}>
-                    <FallbackImage
-                      src={src}
-                      alt={`${name} screenshot ${i + 1}`}
-                      label={name}
-                      className="w-full h-auto rounded-2xl"
-                      wrapperClassName="w-full aspect-[9/19]"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </>
-        )}
-      </div>
+        </Section>
+      )}
     </div>
   );
 }
