@@ -50,9 +50,17 @@ export function DemoGrid() {
 const OSS_ORDER = { public: 0, "in-progress": 1, planned: 2 };
 
 export function OpenSourceGrid() {
-  const items = Config.Catalog.filter((p) => p.openSource).sort(
-    (a, b) => OSS_ORDER[a.openSource] - OSS_ORDER[b.openSource],
-  );
+  // A project with a separate iOS repo gets a second card pointing at it.
+  const items = Config.Catalog.filter((p) => p.openSource)
+    .sort((a, b) => OSS_ORDER[a.openSource] - OSS_ORDER[b.openSource])
+    .flatMap((p) => {
+      const ios = p.links?.repoIos;
+      if (!ios) return [p];
+      return [
+        p,
+        { ...p, id: `${p.id}-ios`, name: `${p.name} for iOS`, tagline: ios.note || p.tagline, links: { repo: ios.href } },
+      ];
+    });
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

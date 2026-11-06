@@ -68,6 +68,7 @@ const App = {
   //  status: key of App.Status
   //  milestones (optional) → the project shows up in progress tracking (Lab)
   //    state: "done" | "active" | "todo"
+  //  links.repo → source (web/main), links.repoIos → { label, href, note } for a separate iOS repo
   //  screenshots (mobile) → /static/images/work/apps/<id>/screenshot_<n>_<light|dark>.webp
   //  image → thumbnail under /static/images/work/
   // ===========================================================================
@@ -113,7 +114,7 @@ const App = {
       featured: true,
       icon: "receipt",
       tagline: "Billing for solo traders who resell services.",
-      desc: "Costs, invoices, renewals and profit in one place for developers and freelancers who resell services. Track what each customer owes and what you owe providers, and issue invoices and proformas on your own branded templates, from the web or the iOS app. Open source under MIT: self-host it, or use it free at inv.octax.dev.",
+      desc: "Costs, invoices, renewals and profit in one place for developers and freelancers who resell services. Track what each customer owes and what you owe providers, and issue invoices and proformas on your own branded templates, from the web or the native iPhone app. Both the web app and the iOS app are open source under MIT: self-host it, or use it free at inv.octax.dev.",
       gallery: [
         { src: "gallery/solobill/overview.png", caption: "Overview: revenue, cost, profit and renewals" },
         { src: "gallery/solobill/invoices.png", caption: "Customer invoices" },
@@ -127,6 +128,11 @@ const App = {
       links: {
         demo: { label: "Try it free", href: "https://inv.octax.dev" },
         repo: `${GITHUB_ORG}/solobill`,
+        repoIos: {
+          label: "iOS source",
+          href: `${GITHUB_ORG}/solobill-ios`,
+          note: "The native iPhone app: SwiftUI, no dependencies.",
+        },
       },
       milestones: [
         { title: "Admin web app & API", state: "done" },
@@ -135,7 +141,7 @@ const App = {
         { title: "iOS app", note: "TestFlight", state: "done" },
         { title: "Free public service", note: "inv.octax.dev", state: "done" },
         { title: "Open source web repo", note: "octax-app/solobill, MIT", state: "done" },
-        { title: "Open source iOS repo", state: "todo" },
+        { title: "Open source iOS repo", note: "octax-app/solobill-ios, MIT", state: "done" },
         { title: "Android app", state: "todo" },
       ],
     },
@@ -505,7 +511,7 @@ const App = {
           "Running Octax: building our own products (OneERP, Octax Solobill, Open Pass) and shipping apps and platforms for clients.",
         highlights: [
           "Launched OneERP, a live ERP and auction platform, at mwsauction.com.",
-          "Shipped and open-sourced Octax Solobill, free at inv.octax.dev.",
+          "Shipped and open-sourced Octax Solobill (web and iOS), free at inv.octax.dev.",
           "Building Open Pass, an end-to-end encrypted password manager.",
         ],
         stack: ["Flutter", "NestJS", "Go", "React", "SwiftUI"],

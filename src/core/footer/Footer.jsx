@@ -9,7 +9,15 @@ const top = () => window.scrollTo({ top: 0, left: 0 });
 
 function Footer() {
   const products = Config.Catalog.filter((p) => p.kind === "platform");
-  const openSource = Config.Catalog.filter((p) => p.openSource === "public" && p.links?.repo);
+  // One link per public repo (a project with a separate iOS repo gets two).
+  const openSource = Config.Catalog.filter((p) => p.openSource === "public" && p.links?.repo).flatMap((p) =>
+    p.links.repoIos
+      ? [
+          { id: p.id, name: p.name, href: p.links.repo },
+          { id: `${p.id}-ios`, name: `${p.name} for iOS`, href: p.links.repoIos.href },
+        ]
+      : [{ id: p.id, name: p.name, href: p.links.repo }],
+  );
 
   return (
     <footer className="relative z-10 mt-28 pb-8">
@@ -49,7 +57,7 @@ function Footer() {
 
             <FooterColumn title="Open source" className="md:col-span-3">
               {openSource.map((p) => (
-                <a key={p.id} href={p.links.repo} target="_blank" rel="noreferrer" className="hover:text-brand">
+                <a key={p.id} href={p.href} target="_blank" rel="noreferrer" className="hover:text-brand">
                   {p.name}
                 </a>
               ))}

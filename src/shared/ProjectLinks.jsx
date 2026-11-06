@@ -10,7 +10,8 @@ export function linksOf(project) {
   if (l.appStore) out.push({ key: "appStore", label: "App Store", href: l.appStore, icon: <AppleGlyph size={15} /> });
   if (l.playStore) out.push({ key: "playStore", label: "Google Play", href: l.playStore, icon: <PlayGlyph size={14} /> });
   if (l.npm) out.push({ key: "npm", label: "npm", href: l.npm, icon: <Icon name="code" size={15} /> });
-  if (l.repo) out.push({ key: "repo", label: "Source", href: l.repo, icon: <GithubGlyph size={15} /> });
+  if (l.repo) out.push({ key: "repo", label: l.repoIos ? "Web source" : "Source", href: l.repo, icon: <GithubGlyph size={15} /> });
+  if (l.repoIos) out.push({ key: "repoIos", label: l.repoIos.label, href: l.repoIos.href, icon: <GithubGlyph size={15} /> });
   return out;
 }
 

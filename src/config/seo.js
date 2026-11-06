@@ -82,7 +82,8 @@ export function projectLd(p) {
     if (l.appStore) ld.installUrl = l.appStore;
     if (p.status === "live" && (l.demo || p.openSource === "public"))
       ld.offers = { "@type": "Offer", price: "0", priceCurrency: "USD" };
-    if (l.repo) ld.codeRepository = l.repo;
+    const repos = [l.repo, l.repoIos?.href].filter(Boolean);
+    if (repos.length) ld.codeRepository = repos.length === 1 ? repos[0] : repos;
     if (p.screenshots)
       ld.screenshot = Array.from({ length: p.screenshots }, (_, i) =>
         `${SITE_URL}/static/images/work/apps/${p.id}/screenshot_${i + 1}_light.webp`);
@@ -138,7 +139,8 @@ function linkList(p) {
     l.appStore && `[App Store](${l.appStore})`,
     l.playStore && `[Google Play](${l.playStore})`,
     l.npm && `[npm](${l.npm})`,
-    l.repo && `[Source code](${l.repo})`,
+    l.repo && `[${l.repoIos ? "Web source code" : "Source code"}](${l.repo})`,
+    l.repoIos && `[iOS source code](${l.repoIos.href})`,
   ].filter(Boolean);
 }
 
