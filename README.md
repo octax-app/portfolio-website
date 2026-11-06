@@ -2,7 +2,7 @@
 
 The personal portfolio of **Haitham Al-Abdullah**, a full-stack developer, and the home of the **Octax** studio brand. A clean, elegant, and efficient single-page app showcasing published mobile apps, web work, skills, experience, and services.
 
-🔗 **Live:** [octax.cloud](https://octax.cloud)
+🔗 **Live:** [octax.dev](https://octax.dev)
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
@@ -125,4 +125,4 @@ Released under the [MIT License](LICENSE). The code is free to use; the personal
 
 ---
 
-Crafted with ♥ by Haitham — [octax.cloud](https://octax.cloud) · [@octax-app](https://github.com/octax-app)
+Crafted with ♥ by Haitham — [octax.dev](https://octax.dev) · [@octax-app](https://github.com/octax-app)

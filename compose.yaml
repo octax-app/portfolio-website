@@ -1,0 +1,68 @@
+# octax.dev — static site served by nginx behind the shared Traefik proxy.
+#
+#   npm ci && npm run build        # produces ./build
+#   docker compose up -d           # serve it
+#
+# or build inside Docker (no local Node needed):
+#   docker compose --profile build run --rm builder && docker compose up -d
+#
+# Traefik is already running on the external "proxy" network and issues
+# certificates with the "cloudflare" resolver.
+
+services:
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.05"
+          memory: 32M
+    expose:
+      - "80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/snippets:/etc/nginx/snippets:ro
+      - ./build:/var/www/build:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      # octax.dev (+ www → apex redirect)
+      - "traefik.http.routers.octax-web.rule=Host(`octax.dev`) || Host(`www.octax.dev`)"
+      - "traefik.http.routers.octax-web.entrypoints=websecure"
+      - "traefik.http.routers.octax-web.tls=true"
+      - "traefik.http.routers.octax-web.tls.certresolver=cloudflare"
+      - "traefik.http.routers.octax-web.middlewares=octax-web-www"
+      - "traefik.http.middlewares.octax-web-www.redirectregex.regex=^https?://www\\.octax\\.dev/(.*)"
+      - "traefik.http.middlewares.octax-web-www.redirectregex.replacement=https://octax.dev/$${1}"
+      - "traefik.http.middlewares.octax-web-www.redirectregex.permanent=true"
+      - "traefik.http.services.octax-web.loadbalancer.server.port=80"
+    networks:
+      - proxy
+
+  # One-off build of ./build inside Docker. Not started by `docker compose up`.
+  builder:
+    image: node:22-alpine
+    profiles: ["build"]
+    working_dir: /app
+    command: sh -c "npm ci --no-audit --no-fund && npm run build"
+    volumes:
+      - .:/app
+      - builder_node_modules:/app/node_modules # keep Linux deps off the host's node_modules
+    network_mode: bridge
+
+volumes:
+  builder_node_modules:
+
+networks:
+  proxy:
+    external: true

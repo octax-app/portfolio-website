@@ -1,17 +1,16 @@
 // =============================================================================
 //  Single source of truth for all site content.
-//  Everything the pages render (Work, Skills & Tools, Experience, Studio) is
-//  driven from this file, so you can update copy without touching components.
+//  Every page (Home, Work, Lab, Stack, About, Services) renders from this file,
+//  so copy, projects and progress can be updated without touching components.
 //
-//  Entries marked `placeholder: true` (and any "TODO" comments) are editable
-//  scaffolding — replace them with your real content.
+//  Tones: "violet" | "pink" | "amber" | "mint" | "sky" | "coral"
 // =============================================================================
 
 const GITHUB_ORG = "https://github.com/octax-app";
 
 const App = {
-  Title: "Haitham Portfolio",
-  Slug: "Full-Stack Developer",
+  Title: "Octax",
+  Slug: "Product studio",
   Logo: undefined, // jsx tag : example : SVG or Img
   LogoForceRefresh: true,
   Shortcuts: {
@@ -21,286 +20,429 @@ const App = {
   NavLinks: [
     { Title: "Home", Path: "/" },
     { Title: "Work", Path: "/work" },
-    { Title: "Skills & Tools", Path: "/skills-tools" },
-    { Title: "Experience", Path: "/experience" },
-    { Title: "Studio", Path: "/studio" },
+    { Title: "Lab", Path: "/lab" },
+    { Title: "Services", Path: "/studio" },
+    { Title: "Stack", Path: "/skills-tools" },
+    { Title: "About", Path: "/experience" },
   ],
-  CopyRights: "octax.cloud",
-  Website: "https://octax.cloud",
-  FooterNote: "Crafted with ♥ by Haitham",
-  AboutMe: {
+  CopyRights: "Octax",
+  Website: "https://octax.dev",
+  FooterNote: "Crafted with care in the UAE",
+  Contact: {
+    WhatsApp: "971589935204",
+  },
+  // The company, shown in the footer
+  About: {
+    Name: "Octax",
+    Blurb:
+      "Octax is a product studio that designs, builds and runs mobile apps, web platforms and open-source tools. Clean code, elegant interfaces, efficient software.",
+  },
+  // The founder, shown on the About page
+  Founder: {
     Name: "Haitham Al-Abdullah",
-    PhoneNumber: "971589935204",
-    Age: 28,
-    Marital: " a loving husband & caring father",
-    Role: "Full-stack developer",
-    Slug:
-      "who can craft a Clean, Elegant, & Efficient Web & Mobile Applications",
+    Role: "Founder & lead engineer",
+    Bio: "Full-stack developer with 7+ years of shipping cross-platform mobile and web products, from the first Figma sketch to the App Store.",
   },
   Twitter: "https://twitter.com/HaithamDev_",
   Github: GITHUB_ORG,
   GithubOrg: "octax-app",
-  LinksTitle: "Community Projects",
-  Links: [
-    // up to 5 Links — shown in the footer
+
+  // ===========================================================================
+  //  STATUS + OPEN-SOURCE vocabularies (used by pills & filters)
+  // ===========================================================================
+  Status: {
+    live: { label: "Live", tone: "mint" },
+    beta: { label: "Beta", tone: "sky" },
+    building: { label: "In the lab", tone: "amber" },
+    private: { label: "Client work", tone: "violet" },
+  },
+  OpenSource: {
+    public: { label: "Open source", tone: "mint" },
+    "in-progress": { label: "Open-sourcing", tone: "amber" },
+    planned: { label: "Open source planned", tone: "sky" },
+  },
+
+  // ===========================================================================
+  //  CATALOG — every product and project, in display order.
+  //  kind:  "platform" | "mobile" | "webapp" | "website" | "library" | "community"
+  //  status: key of App.Status
+  //  milestones (optional) → the project shows up in progress tracking (Lab)
+  //    state: "done" | "active" | "todo"
+  //  screenshots (mobile) → /static/images/work/apps/<id>/screenshot_<n>_<light|dark>.webp
+  //  image → thumbnail under /static/images/work/
+  // ===========================================================================
+  Catalog: [
     {
-      Title: "Flutter Dashboard",
-      Path: `${GITHUB_ORG}/flutter-dashboard`,
+      id: "oneerp",
+      name: "OneERP",
+      kind: "platform",
+      tone: "amber",
+      status: "live",
+      featured: true,
+      icon: "auction",
+      tagline: "ERP and live-auction platform for a vehicle-auction business.",
+      desc: "A full ERP plus live online auctions, replacing a legacy system. A modular NestJS backend, a Go realtime bid engine that handles bid storms, and React / Next.js web apps for customers and staff. Mobile apps for bidders, sellers and the yard team are being built now.",
+      gallery: [
+        { src: "gallery/oneerp/site-home.jpg", caption: "Auction website: home" },
+        { src: "gallery/oneerp/site-vehicles.jpg", caption: "Vehicle inventory with filters" },
+        { src: "gallery/oneerp/site-vehicle.jpg", caption: "Vehicle details and bidding" },
+        { src: "gallery/oneerp/site-calendar.jpg", caption: "Auction calendar" },
+        { src: "gallery/oneerp/site-mobile.jpg", caption: "Mobile web: home", device: "mobile" },
+        { src: "gallery/oneerp/site-vehicles-mobile.jpg", caption: "Mobile web: inventory", device: "mobile" },
+      ],
+      tags: ["NestJS", "Go", "Next.js", "React", "Expo", "Postgres", "Redis"],
+      links: {
+        site: { label: "mwsauction.com", href: "https://mwsauction.com" },
+        admin: { label: "admin.mwsauction.com", href: "https://admin.mwsauction.com" },
+      },
+      milestones: [
+        { title: "Admin ERP", note: "admin.mwsauction.com", state: "done" },
+        { title: "Live auction website", note: "mwsauction.com", state: "done" },
+        { title: "Go realtime bid engine", state: "done" },
+        { title: "Auction mobile app", note: "Bidders & sellers, Expo", state: "active" },
+        { title: "Inventory mobile app", note: "Yard team, Expo", state: "active" },
+        { title: "App Store & Google Play release", state: "todo" },
+      ],
     },
     {
-      Title: "Azzan Time",
-      Path: `${GITHUB_ORG}/azzan-time`,
+      id: "solobill",
+      name: "Octax Solobill",
+      kind: "platform",
+      tone: "violet",
+      status: "live",
+      featured: true,
+      icon: "receipt",
+      tagline: "Billing for solo traders who resell services.",
+      desc: "Costs, invoices, renewals and profit in one place for developers and freelancers who resell services. Track what each customer owes and what you owe providers, and issue invoices and proformas on your own branded templates, from the web or the iOS app. Open source under MIT: self-host it, or use it free at inv.octax.dev.",
+      gallery: [
+        { src: "gallery/solobill/overview.png", caption: "Overview: revenue, cost, profit and renewals" },
+        { src: "gallery/solobill/invoices.png", caption: "Customer invoices" },
+        { src: "gallery/solobill/invoice-editor.png", caption: "Invoice editor" },
+        { src: "gallery/solobill/invoice.png", caption: "Invoice on a branded template" },
+        { src: "gallery/solobill/customer.png", caption: "Customer details" },
+        { src: "gallery/solobill/pdf-arabic.png", caption: "Arabic PDF output", device: "document" },
+      ],
+      tags: ["TypeScript", "React", "Hono", "SQLite", "SwiftUI", "Docker"],
+      openSource: "public",
+      links: {
+        demo: { label: "Try it free", href: "https://inv.octax.dev" },
+        repo: `${GITHUB_ORG}/solobill`,
+      },
+      milestones: [
+        { title: "Admin web app & API", state: "done" },
+        { title: "Branded PDF templates & invoices", state: "done" },
+        { title: "Workspaces & Sign in with Apple", state: "done" },
+        { title: "iOS app", note: "TestFlight", state: "done" },
+        { title: "Free public service", note: "inv.octax.dev", state: "done" },
+        { title: "Open source web repo", note: "octax-app/solobill, MIT", state: "done" },
+        { title: "Open source iOS repo", state: "todo" },
+        { title: "Android app", state: "todo" },
+      ],
     },
     {
-      Title: "Quran",
-      Path: `${GITHUB_ORG}/quran-app`,
+      id: "openpass",
+      name: "Open Pass",
+      kind: "platform",
+      tone: "sky",
+      status: "building",
+      featured: true,
+      image: "pipeline/openpass-icon.png",
+      tagline: "A free, end-to-end encrypted password manager.",
+      desc: "Passwords, passkeys and one-time codes that sync across browsers, desktop and phone, encrypted on your device so only you can open them. Built, not yet released: public launch and open source come after an independent security audit.",
+      tags: ["Rust", "React", "Native iOS", "Native Android", "Zero-knowledge"],
+      openSource: "planned",
+      milestones: [
+        { title: "Security design & foundations", state: "done" },
+        { title: "Rust core, sync server & CLI", state: "done" },
+        { title: "Browser extensions", state: "done" },
+        { title: "Desktop apps", note: "macOS, Windows, Linux", state: "done" },
+        { title: "Native iOS & Android apps", state: "done" },
+        { title: "Sharing, families & emergency access", state: "active" },
+        { title: "Developer toolkit & file safe", state: "active" },
+        { title: "Independent security audit", state: "todo" },
+        { title: "Public release & open source", state: "todo" },
+      ],
+    },
+
+    // ---- Mobile apps ---------------------------------------------------------
+    {
+      id: "seahorseline",
+      name: "Sea Horse Line",
+      kind: "mobile",
+      tone: "sky",
+      status: "live",
+      featured: true,
+      hasDark: true,
+      screenshots: 14,
+      tagline: "Shipping app for a leading car marine shipping company.",
+      desc: "A cross-platform app for a car marine shipping company: shipment tracking, invoices, secure areas, dark mode and six languages.",
+      tags: ["Flutter", "Laravel", "REST API", "6 Languages", "Dark Mode"],
+      links: {
+        appStore: "https://apps.apple.com/app/id1450976739",
+        playStore: "https://play.google.com/store/apps/details?id=com.seahorseline",
+      },
     },
     {
-      Title: "This Website",
-      Path: `${GITHUB_ORG}/portfolio-website`,
+      id: "azzantime",
+      name: "Azzan Time",
+      kind: "mobile",
+      tone: "mint",
+      status: "live",
+      featured: true,
+      screenshots: 3,
+      openSource: "public",
+      tagline: "Accurate prayer times, wherever you are.",
+      desc: "Helps Muslims around the world track the five daily prayers accurately, based on the chosen calculation method and the user's location.",
+      tags: ["Flutter", "Prayer Times", "Lifestyle"],
+      links: {
+        appStore: "https://apps.apple.com/app/id6464369844",
+        repo: `${GITHUB_ORG}/azzan-time`,
+      },
+    },
+    {
+      id: "islamicforum",
+      name: "Islamic Forum",
+      kind: "mobile",
+      tone: "amber",
+      status: "live",
+      screenshots: 5,
+      tagline: "The official app of the Islamic Forum, Sharjah.",
+      desc: "The official app of a government institution specialising in Islamic culture, based in the Emirate of Sharjah.",
+      tags: ["Flutter", "Content", "Government"],
+      links: { appStore: "https://apps.apple.com/app/id6474943598" },
+    },
+    {
+      id: "almasar",
+      name: "Al-Masar",
+      kind: "mobile",
+      tone: "violet",
+      status: "live",
+      screenshots: 5,
+      tagline: "Employee self-service on the go.",
+      desc: "The employee's gateway to work requests and tasks, integrated with the Almasar system that runs internal operations.",
+      tags: ["Flutter", "Enterprise", "HR / Self-Service", "Push Notifications"],
+      links: { appStore: "https://apps.apple.com/app/id6479048658" },
+    },
+    {
+      id: "ezcard",
+      name: "EZ Card",
+      kind: "mobile",
+      tone: "pink",
+      status: "live",
+      hasDark: true,
+      screenshots: 3,
+      tagline: "Digital gift cards, instantly.",
+      desc: "Buy gaming, shopping and digital-content gift cards instantly, with Apple Pay and Google Pay.",
+      tags: ["Flutter", "E-commerce", "Apple Pay", "Google Pay", "Dark Mode"],
+      links: { appStore: "https://apps.apple.com/app/id1621571791" },
+    },
+    {
+      id: "fanajeen",
+      name: "FANAJEEN",
+      kind: "mobile",
+      tone: "coral",
+      status: "private",
+      screenshots: 3,
+      tagline: "E-commerce for coffee-cup lovers.",
+      desc: "A sleek cross-platform store for coffee cups and accessories, with a friendly interface and smooth navigation.",
+      tags: ["Flutter", "E-commerce", "UI/UX"],
+    },
+
+    // ---- Web apps ------------------------------------------------------------
+    {
+      id: "octax-erp",
+      name: "OctaX ERP",
+      kind: "webapp",
+      tone: "pink",
+      status: "private",
+      image: "webapps/octax_erp.png",
+      tagline: "Admin dashboard with roles, modules and AI chat.",
+      desc: "A full-stack admin dashboard with authentication, roles, a module system, realtime updates and AI chat.",
+      gallery: [
+        { src: "webapps/octax_erp.png", caption: "Admin dashboard" },
+      ],
+      tags: ["Laravel", "React", "MySQL"],
+    },
+    {
+      id: "mocha-exchange",
+      name: "Mocha Exchange",
+      kind: "webapp",
+      tone: "amber",
+      status: "private",
+      image: "webapps/rebal.png",
+      tagline: "Currency-exchange back office with live rates.",
+      desc: "A full-stack admin dashboard for currency exchange, with realtime exchange rates.",
+      gallery: [
+        { src: "webapps/rebal.png", caption: "Exchange back office" },
+      ],
+      tags: ["Laravel", "React", "REST API"],
+    },
+
+    // ---- Websites ------------------------------------------------------------
+    {
+      id: "seahorseline-web",
+      name: "Sea Horse Line",
+      kind: "website",
+      tone: "sky",
+      status: "live",
+      image: "websites/seahorseline.png",
+      tagline: "Marketing site for a car shipping company.",
+      desc: "A fast, responsive marketing site for Sea Horse Line.",
+      gallery: [
+        { src: "gallery/seahorseline-web/home.jpg", caption: "Home page" },
+        { src: "gallery/seahorseline-web/mobile.jpg", caption: "Mobile", device: "mobile" },
+      ],
+      tags: ["React", "Tailwind CSS", "Vite"],
+      links: { site: { label: "seahorseline.com", href: "https://seahorseline.com" } },
+    },
+    {
+      id: "nahdatalofuq",
+      name: "Nahdat Alofuq",
+      kind: "website",
+      tone: "amber",
+      status: "live",
+      tagline: "Bilingual site for an investment and development company.",
+      desc: "Corporate website for Nahdat Alofuq, an investment and development company working across real estate, tourism, import, export and smart cities. Fully bilingual in Arabic (RTL) and English, with sector pages, a projects showcase, land opportunities and a contact flow.",
+      gallery: [
+        { src: "gallery/nahdatalofuq/home-en.jpg", caption: "Home (English)" },
+        { src: "gallery/nahdatalofuq/projects-en.jpg", caption: "Projects" },
+        { src: "gallery/nahdatalofuq/sectors-en.jpg", caption: "Sectors" },
+        { src: "gallery/nahdatalofuq/mobile.jpg", caption: "Mobile (Arabic, RTL)", device: "mobile" },
+      ],
+      tags: ["Next.js", "Arabic & English", "RTL", "Responsive"],
+      links: { site: { label: "nahdatalofuq.com", href: "https://nahdatalofuq.com" } },
+    },
+    {
+      id: "rebal",
+      name: "Rebal Exchange",
+      kind: "website",
+      tone: "mint",
+      status: "live",
+      image: "websites/rebal.png",
+      tagline: "Conversion-focused exchange landing page.",
+      desc: "A conversion-focused landing page for a currency exchange.",
+      gallery: [
+        { src: "gallery/rebal/home.jpg", caption: "Exchange landing page" },
+        { src: "gallery/rebal/mobile.jpg", caption: "Mobile", device: "mobile" },
+      ],
+      tags: ["HTML", "CSS", "JavaScript"],
+      links: { site: { label: "rebal.online", href: "https://rebal.online/" } },
+    },
+    {
+      id: "octax-site",
+      name: "octax.dev",
+      kind: "website",
+      tone: "violet",
+      status: "live",
+      openSource: "public",
+      tagline: "This website. Claymorphism, React and Tailwind.",
+      desc: "The Octax studio site you're looking at, built with React, Tailwind CSS and Vite.",
+      gallery: [
+        { src: "gallery/octax-site/home-light.jpg", caption: "Home, light theme" },
+        { src: "gallery/octax-site/home-dark.jpg", caption: "Home, dark theme" },
+        { src: "gallery/octax-site/lab.jpg", caption: "The Lab: progress tracking" },
+        { src: "gallery/octax-site/mobile.jpg", caption: "Mobile", device: "mobile" },
+      ],
+      tags: ["React", "Tailwind CSS", "Vite"],
+      links: { repo: `${GITHUB_ORG}/portfolio-website` },
+    },
+
+    // ---- Libraries & community ----------------------------------------------
+    {
+      id: "hot-date-react",
+      name: "hot-date-react",
+      kind: "library",
+      tone: "coral",
+      status: "live",
+      image: "libs/hot-date-react.png",
+      openSource: "public",
+      tagline: "Natural-language date input for React.",
+      desc: "React wrapper for @stolinski/hot-date, a natural-language date input web component.",
+      gallery: [
+        { src: "libs/hot-date-react.png", caption: "Natural-language date input" },
+      ],
+      tags: ["React", "npm", "Web Components"],
+      links: { npm: "https://www.npmjs.com/package/@octax-app/hot-date-react" },
+    },
+    {
+      id: "flutter-dashboard",
+      name: "Flutter Dashboard",
+      kind: "community",
+      tone: "sky",
+      status: "live",
+      openSource: "public",
+      icon: "dashboard",
+      tagline: "A clean, responsive admin dashboard starter.",
+      desc: "A clean, responsive admin dashboard starter for Flutter.",
+      tags: ["Flutter", "Admin UI"],
+      links: { repo: `${GITHUB_ORG}/flutter-dashboard` },
+    },
+    {
+      id: "quran-app",
+      name: "Quran",
+      kind: "community",
+      tone: "violet",
+      status: "live",
+      openSource: "public",
+      icon: "book",
+      tagline: "A distraction-free Quran reading experience.",
+      desc: "A distraction-free Quran reading app for Flutter.",
+      tags: ["Flutter", "Open Source"],
+      links: { repo: `${GITHUB_ORG}/quran-app` },
     },
   ],
 
+  // Catalog filter chips (Work page + home preview)
+  CatalogFilters: [
+    { id: "all", label: "All" },
+    { id: "platform", label: "Products" },
+    { id: "mobile", label: "Mobile apps" },
+    { id: "web", label: "Web", kinds: ["webapp", "website"] },
+    { id: "oss", label: "Open source" },
+    { id: "lab", label: "In progress" },
+  ],
+
   // ===========================================================================
-  //  HOME — card-based landing content.
+  //  HOME
   // ===========================================================================
   Home: {
     Hero: {
-      eyebrow: "Full-Stack Developer",
-      greeting: "Hi, I'm Haitham",
+      eyebrow: "Octax · Product studio",
+      title: ["We craft", "clean,", "elegant &", "efficient", "products."],
       subtitle:
-        "A full-stack developer building cross-platform mobile & web products — from the first sketch in Figma to a shipped, performant app.",
-      primaryCta: "Get in Touch",
-      secondaryCta: "View Work",
+        "Octax designs, builds and runs mobile apps, web platforms and open-source tools, from the first sketch to a shipped, fast product people enjoy using.",
+      primaryCta: "Start a project",
+      secondaryCta: "Explore the work",
     },
-    Features: [
-      {
-        title: "Clean",
-        accent: "#fbd15b",
-        desc: "Minimalist code, modern design. Clean UI and seamless UX that feels effortless.",
-      },
-      {
-        title: "Elegant",
-        accent: "#ff8478",
-        desc: "Sophisticated interfaces and captivating experiences — pleasing aesthetics in every detail.",
-      },
-      {
-        title: "Efficient",
-        accent: "#5f6cf1",
-        desc: "Optimized web & mobile. Fast, resource-friendly, and built to scale.",
-      },
-    ],
     Stats: [
-      { value: "25+", label: "Projects shipped" },
-      { value: "7+", label: "Years of experience" },
-      { value: "6", label: "Languages supported" },
-      { value: "100%", label: "Passion for craft" },
-    ],
-    Build: [
-      { title: "Mobile Apps", desc: "Cross-platform iOS & Android with Flutter.", to: "/work" },
-      { title: "Web Apps", desc: "Full-stack dashboards & SaaS platforms.", to: "/work" },
-      { title: "Websites", desc: "Fast, polished marketing sites & landing pages.", to: "/work" },
-      { title: "AI Agents", desc: "Custom AI-driven assistants and automation agents.", to: "/work" },
+      { value: "25+", label: "Products shipped", tone: "violet" },
+      { value: "3", label: "Products in the lab", tone: "amber" },
+      { value: "7+", label: "Years building", tone: "mint" },
+      { value: "6", label: "Languages supported", tone: "pink" },
     ],
     Cta: {
       title: "Let's build something clean, elegant & efficient.",
-      desc: "Have a product in mind? I'd love to help you bring it to life.",
-      button: "Get in Touch",
+      desc: "Have a product in mind? Octax can take it from idea to app store.",
+      button: "Talk to Octax",
     },
   },
 
-  // ===========================================================================
-  //  WORK — split into categories. Each category picks a `layout`:
-  //    "showcase" → large screenshot reveal (uses /static/images/work/<label>/)
-  //    "cards"    → compact project cards with a thumbnail
-  //    "links"    → external link cards (e.g. open-source repos)
-  // ===========================================================================
   Work: {
     Intro:
-      "A selection of products I've designed and shipped — from cross-platform mobile apps to full-stack web platforms and open-source tools.",
-    Categories: [
-      {
-        id: "mobile-apps",
-        title: "Mobile Apps",
-        subtitle: "Cross-platform apps crafted with Flutter — published on the App Store.",
-        layout: "showcase",
-        projects: [
-          {
-            name: "SEA HORSE LINE",
-            label: "seahorseline",
-            hasDark: true,
-            screenshots: 14,
-            tags: ["Flutter", "Laravel", "REST API", "6 Languages", "Dark Mode"],
-            appStore: "https://apps.apple.com/app/id1450976739",
-            playStore: "https://play.google.com/store/apps/details?id=com.seahorseline",
-            slug:
-              "a powerful cross-platform mobile application tailor-made for a leading car marine shipping company. This app offers a seamless shipping experience with its feature-rich design, including dark mode, support for six languages, an invoices section, and secure areas...",
-          },
-          {
-            name: "Azzan Time",
-            label: "azzantime",
-            hasDark: false,
-            screenshots: 3,
-            tags: ["Flutter", "Prayer Times", "Lifestyle"],
-            appStore: "https://apps.apple.com/app/id6464369844",
-            slug:
-              "Azzan Time is an advanced mobile application aimed at assisting Muslims around the world in easily and accurately tracking prayer times. The app provides prayer times for the five daily prayers based on the selected Islamic method and the user's location worldwide....",
-          },
-          {
-            name: "Islamic Forum",
-            label: "islamicforum",
-            hasDark: false,
-            screenshots: 5,
-            tags: ["Flutter", "Lifestyle", "Content"],
-            appStore: "https://apps.apple.com/app/id6474943598",
-            slug:
-              "the official app of the Islamic Forum — The Islamic Forum is a government institution specializing in Islamic culture, based in the Emirate of Sharjah. It strives to disseminate Islamic culture among diverse communities through a balanced approach...",
-          },
-          {
-            name: "Al-Masar",
-            label: "almasar",
-            hasDark: false,
-            screenshots: 5,
-            tags: ["Flutter", "Enterprise", "HR / Self-Service", "Push Notifications"],
-            appStore: "https://apps.apple.com/app/id6479048658",
-            slug:
-              "Al-Masar is the employee's gateway to seamless and efficient management of their work-related tasks and requests. Designed to integrate with the Almasar system, which powers our internal operations, this app empowers our employees to stay connected and productive on the go...",
-          },
-          {
-            name: "EZ Card",
-            label: "ezcard",
-            hasDark: true,
-            screenshots: 3,
-            tags: ["Flutter", "E-commerce", "Apple Pay", "Google Pay", "Dark Mode"],
-            appStore: "https://apps.apple.com/app/id1621571791",
-            slug:
-              "Buy your favorite digital gift cards instantly with EZ Card. Whether you're gaming, shopping, or purchasing digital content, EZ Card provides a fast, secure, and hassle-free experience...",
-          },
-          {
-            name: "FANAJEEN",
-            label: "fanajeen",
-            hasDark: false,
-            screenshots: 3,
-            tags: ["Flutter", "E-commerce", "UI/UX"],
-            slug:
-              "a sleek cross-platform e-commerce app, tailored for those who have a deep passion for coffee cups and it's accessories. With a user-friendly interface and seamless navigation...",
-          },
-        ],
-      },
-      {
-        id: "websites",
-        title: "Websites",
-        subtitle: "Marketing sites & landing pages built for speed and polish.",
-        layout: "cards",
-        projects: [
-          {
-            name: "My Portfolio",
-            label: "websites/portfolio",
-            placeholder: false,
-            tags: ["React", "Tailwind CSS", "Vite"],
-            href: 'https://octax.cloud',
-            slug:
-              "A fast, responsive marketing site. Replace this entry with a real project.",
-          },
-          {
-            name: "Sea Horse Line",
-            label: "websites/seahorseline",
-            placeholder: false,
-            tags: ["React", "Tailwind CSS", "Vite"],
-            href: 'https://seahorseline.com',
-            slug:
-              "A fast, responsive marketing site. Replace this entry with a real project.",
-          },
-          {
-            name: "Rebal Exchange",
-            label: "websites/rebal",
-            placeholder: false,
-            tags: ["HTML", "CSS", "JavaScript"],
-            href: "https://rebal.online/",
-            slug:
-              "A conversion-focused landing page. Swap in your own details, tags, and link.",
-          },
-        ],
-      },
-      {
-        id: "web-apps",
-        title: "Web Apps",
-        subtitle: "Full-stack dashboards & SaaS built end-to-end.",
-        layout: "cards",
-        projects: [
-          {
-            name: "OctaX ERP",
-            label: "webapps/octax_erp",
-            placeholder: false,
-            tags: ["Laravel", "React", "MySQL"],
-            href: '#private',
-            slug:
-              "A full-stack admin dashboard with authentication, roles, and modules system. real-time, AI chat...",
-          },
-          {
-            name: "Mocha Exchange",
-            label: "webapps/rebal",
-            placeholder: false,
-            tags: ["Laravel", "React", "REST API"],
-            href: '#private',
-            slug:
-              "A full-stack admin dashboard for currency exchange, with real-time currency exchange values...",
-          },
-        ],
-      },
-      {
-        id: "libraries",
-        title: "Libraries & Packages",
-        subtitle: "Reusable open-source packages I build and maintain.",
-        layout: "cards",
-        projects: [
-          {
-            name: "hot-date-react",
-            label: "libs/hot-date-react",
-            placeholder: false,
-            price: 0, // 0 → shown as "Free"
-            tags: ["Flutter", "Package", "Open Source"],
-            href: "https://www.npmjs.com/package/@octax-app/hot-date-react",
-            slug:
-              "React wrapper for @stolinski/hot-date — a natural language date input web component.",
-          },
-        ],
-      },
-      {
-        id: "community",
-        title: "Community Projects",
-        subtitle: "Open-source apps I build and share with the community.",
-        layout: "links",
-        projects: [
-          {
-            name: "Flutter Dashboard",
-            tags: ["Flutter", "Admin UI"],
-            href: `${GITHUB_ORG}/flutter-dashboard`,
-            slug: "A clean, responsive admin dashboard starter for Flutter.",
-          },
-          {
-            name: "Azzan Time",
-            tags: ["Flutter", "Prayer Times"],
-            href: `${GITHUB_ORG}/azzan-time`,
-            slug: "An elegant prayer-times app with accurate azan notifications.",
-          },
-          {
-            name: "Quran",
-            tags: ["Flutter", "Open Source"],
-            href: `${GITHUB_ORG}/quran-app`,
-            slug: "A distraction-free Quran reading experience.",
-          },
-        ],
-      },
-    ],
+      "Products we run ourselves and work we've shipped for clients, from cross-platform mobile apps to full-stack platforms and open-source tools.",
+  },
+
+  Lab: {
+    Intro:
+      "What's being built right now, in the open. Live progress, demos you can try today, and the code we share.",
   },
 
   // ===========================================================================
-  //  SKILLS & TOOLS
+  //  STACK
   // ===========================================================================
   Skills: {
     Intro:
-      "The languages, frameworks, and tools I reach for to design and ship clean, elegant, and efficient products.",
+      "The languages, frameworks and tools Octax reaches for to design and ship clean, elegant and efficient products.",
     // icons rendered at the top of the page (must match StackSvg `type`s)
     FavoriteStack: [
       { type: "flutter", color: "#00D0FF" },
@@ -314,145 +456,128 @@ const App = {
     Groups: [
       {
         title: "Languages",
-        items: ["Dart", "PHP", "JavaScript", "TypeScript", "HTML5", "CSS3", "SQL"],
+        tone: "violet",
+        items: ["Dart", "TypeScript", "JavaScript", "PHP", "Go", "Rust", "Swift", "SQL"],
       },
       {
         title: "Mobile",
-        items: [
-          "Flutter",
-          "State Management",
-          "REST APIs",
-          "Firebase",
-          "Push Notifications",
-          "Localization (i18n)",
-        ],
+        tone: "pink",
+        items: ["Flutter", "SwiftUI", "Expo / React Native", "Firebase", "Push Notifications", "Localization (i18n)"],
       },
       {
         title: "Frontend",
-        items: [
-          "React",
-          "React Router",
-          "Tailwind CSS",
-          "Bootstrap",
-          "Framer Motion",
-          "Vite",
-        ],
+        tone: "sky",
+        items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Vite", "TanStack Query"],
       },
       {
         title: "Backend",
-        items: [
-          "Laravel",
-          "REST APIs",
-          "MySQL",
-          "Authentication",
-          "Payment Gateways",
-          "AI Agents",
-        ],
+        tone: "amber",
+        items: ["Laravel", "NestJS", "Hono", "Postgres", "MySQL", "SQLite", "Redis", "Payment Gateways"],
       },
       {
         title: "Design",
+        tone: "coral",
         items: ["Figma", "UI / UX", "Prototyping", "Design Systems"],
       },
       {
-        title: "Tools & Workflow",
-        items: [
-          "Git & GitHub",
-          "VS Code",
-          "Postman",
-          "CI / CD basics",
-          "Vercel / Netlify",
-        ],
+        title: "Ops & Workflow",
+        tone: "mint",
+        items: ["Git & GitHub", "Docker", "CI / CD", "Nx monorepos", "AI agents"],
       },
     ],
   },
 
   // ===========================================================================
-  //  EXPERIENCE — editable placeholder timeline.
-  //  TODO: replace roles, companies, dates, and highlights with your real
-  //  history. Entries render newest-first, top to bottom.
+  //  ABOUT — the founder's timeline. Entries render newest-first.
   // ===========================================================================
   Experience: {
     Intro:
-      "A short timeline of the roles and projects that shaped how I build products today.",
+      "Octax is led by its founder, Haitham Al-Abdullah. This is the road that shaped how the studio builds products today.",
     Timeline: [
       {
-        role: "Freelance Developer",
-        company: "Self-employed", 
+        role: "Founder",
+        company: "Octax",
         period: "2025 — Present",
         location: "Remote · UAE",
         current: true,
+        tone: "violet",
         summary:
-          "Replace with a summary of your current role — what you own, the products you ship, and the impact you drive.",
+          "Running Octax: building our own products (OneERP, Octax Solobill, Open Pass) and shipping apps and platforms for clients.",
         highlights: [
-          "Led development of cross-platform mobile apps with Flutter.",
-          "Built and maintained Laravel + React web platforms end-to-end.",
-          "Owned UI/UX from Figma to production.",
+          "Launched OneERP, a live ERP and auction platform, at mwsauction.com.",
+          "Shipped and open-sourced Octax Solobill, free at inv.octax.dev.",
+          "Building Open Pass, an end-to-end encrypted password manager.",
         ],
-        stack: ["Flutter", "Laravel", "React", "Tailwind CSS"],
-        placeholder: true,
+        stack: ["Flutter", "NestJS", "Go", "React", "SwiftUI"],
       },
       {
         role: "Senior Full-Stack Developer",
         company: "Marhaba Group",
-        period: "2024 - 2025",
+        period: "2024 — 2025",
         location: "On-site",
-        summary:
-          "Replace with what you did here — the systems you built and the problems you solved.",
+        tone: "pink",
+        summary: "Built and maintained mobile and web systems end-to-end.",
         highlights: [
           "Delivered e-commerce apps with secure payment integrations.",
           "Collaborated with designers to ship pixel-perfect interfaces.",
         ],
         stack: ["Flutter", "Laravel", "MySQL"],
-        placeholder: true,
       },
       {
         role: "Senior Full-Stack Developer",
         company: "MacBerry Technologies",
         period: "2019 — 2024",
         location: "On-site",
-        summary:
-          "Replace with your freelance story — the clients you helped and what you learned.",
+        tone: "sky",
+        summary: "Shipped mobile and web projects for clients across the region.",
         highlights: [
-          "Shipped mobile and web projects for clients across the region.",
+          "Published Flutter apps on the App Store and Google Play.",
           "Grew a portfolio of clean, elegant, efficient products.",
         ],
         stack: ["Flutter", "PHP", "JavaScript"],
-        placeholder: true,
       },
     ],
   },
 
   // ===========================================================================
-  //  STUDIO — the Octax brand.
+  //  SERVICES — what Octax offers
   // ===========================================================================
   Studio: {
     Name: "Octax",
-    Tagline: "A small studio crafting clean, elegant & efficient digital products.",
+    Tagline: "A product studio crafting clean, elegant & efficient software.",
     Intro:
-      "Octax is where I turn ideas into polished mobile and web products. From the first sketch in Figma to a shipped, performant app — design and engineering under one roof.",
+      "Design and engineering under one roof. Octax takes products from the first sketch in Figma to a shipped, fast, maintainable app, and keeps them running after launch.",
     Services: [
       {
-        title: "Mobile Development",
-        desc: "Cross-platform iOS & Android apps built with Flutter — fast, beautiful, and store-ready.",
+        title: "Mobile apps",
+        tone: "pink",
+        icon: "phone",
+        desc: "Cross-platform iOS & Android apps with Flutter and Expo, plus native SwiftUI when it matters.",
       },
       {
-        title: "Web Development",
-        desc: "Full-stack websites and web apps with Laravel, React, and Tailwind CSS.",
+        title: "Web platforms",
+        tone: "violet",
+        icon: "browser",
+        desc: "Full-stack web apps, dashboards and ERPs with React, Next.js, NestJS and Laravel.",
       },
       {
-        title: "UI / UX Design",
-        desc: "Thoughtful interfaces designed in Figma, from wireframes to a complete design system.",
+        title: "UI / UX design",
+        tone: "coral",
+        icon: "pen",
+        desc: "Interfaces designed in Figma, from wireframes to a complete design system.",
       },
       {
-        title: "Product Engineering",
-        desc: "End-to-end delivery — architecture, APIs, payments, and everything in between.",
+        title: "Realtime & scale",
+        tone: "amber",
+        icon: "bolt",
+        desc: "Realtime engines, payments and the infrastructure to run them reliably.",
       },
     ],
     Process: [
-      { step: "01", title: "Discover", desc: "Understand the problem, users, and goals." },
-      { step: "02", title: "Design", desc: "Shape the experience with clean, elegant UI." },
-      { step: "03", title: "Build", desc: "Engineer efficient, maintainable software." },
-      { step: "04", title: "Launch", desc: "Ship, measure, and iterate with care." },
+      { step: "01", title: "Discover", tone: "violet", desc: "Understand the problem, users, and goals." },
+      { step: "02", title: "Design", tone: "pink", desc: "Shape the experience with clean, elegant UI." },
+      { step: "03", title: "Build", tone: "amber", desc: "Engineer efficient, maintainable software." },
+      { step: "04", title: "Launch", tone: "mint", desc: "Ship, measure, and keep improving." },
     ],
     Values: [
       "Clean code, thoughtful architecture.",
@@ -467,4 +592,29 @@ const App = {
   },
 };
 
-export { App };
+// ---------------------------------------------------------------------------
+//  Helpers
+// ---------------------------------------------------------------------------
+const MILESTONE_WEIGHT = { done: 1, active: 0.5, todo: 0 };
+
+// 0–100, from a project's milestones (done = 1, active = ½).
+function progressOf(project) {
+  const m = project.milestones || [];
+  if (!m.length) return null;
+  const sum = m.reduce((acc, x) => acc + (MILESTONE_WEIGHT[x.state] ?? 0), 0);
+  return Math.round((sum / m.length) * 100);
+}
+
+function matchesFilter(project, filterId) {
+  const filter = App.CatalogFilters.find((f) => f.id === filterId);
+  if (!filter || filter.id === "all") return true;
+  if (filter.id === "oss") return Boolean(project.openSource);
+  if (filter.id === "lab")
+    return (project.milestones || []).some((m) => m.state !== "done");
+  const kinds = filter.kinds || [filter.id];
+  return kinds.includes(project.kind);
+}
+
+const findProject = (id) => App.Catalog.find((p) => p.id === id) || null;
+
+export { App, progressOf, matchesFilter, findProject };

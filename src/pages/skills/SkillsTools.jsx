@@ -1,55 +1,52 @@
+import { Tooltip } from "react-tooltip";
+
 import { App as Config } from "../../config/AppConfig";
+import Badge from "../../shared/Badge";
 import PageHeader from "../../shared/PageHeader";
 import Reveal from "../../shared/Reveal";
-import Badge from "../../shared/Badge";
+import { Section } from "../../shared/Section";
+import Seo from "../../shared/Seo";
 import StackSvg from "../home/components/hero/hero_svgs/StackSvg";
-
-const CONTAINER = "max-w-[944px] w-full px-7 md:px-5 lg:px-0";
 
 function SkillsTools() {
   const { Skills } = Config;
 
   return (
-    <div className="pb-24 plus-font">
-      <PageHeader eyebrow="What I use" title="Skills & Tools" subtitle={Skills.Intro} />
-
-      {/* Favorite stack */}
-      <div className="flex justify-center mt-10">
-        <div className={CONTAINER}>
-          <Reveal>
-            <div className="rounded-3xl border-2 border-accent-200 dark:border-accent-700 bg-accent-50 dark:bg-accent-800 p-6">
-              <p className="text-accent-500 dark:text-accent-300 mb-4 font-semibold">
-                Current favorite stack
-              </p>
-              <div className="flex flex-wrap gap-6 items-center">
-                {Skills.FavoriteStack.map((s) => (
-                  <StackSvg key={s.type} type={s.type} onHoverColor={s.color} />
-                ))}
-              </div>
-            </div>
-          </Reveal>
+    <div className="SkillsTools">
+      <Seo
+        title="Stack"
+        description="The languages, frameworks and tools Octax uses: Flutter, SwiftUI, Expo, React, Next.js, NestJS, Laravel, Go, Rust, Postgres, Docker and more."
+      />
+      <PageHeader eyebrow="Stack" tone="sky" title="Skills & tools." subtitle={Skills.Intro}>
+        <div className="clay-inset mt-8 inline-flex flex-wrap items-center gap-6 rounded-full px-6 py-4">
+          {Skills.FavoriteStack.map((s) => (
+            <StackSvg key={s.type} type={s.type} onHoverColor={s.color} />
+          ))}
         </div>
-      </div>
+        <Tooltip id="stack-tooltip" />
+      </PageHeader>
 
-      {/* Skill groups */}
-      <div className="flex justify-center mt-6">
-        <div className={`${CONTAINER} grid grid-cols-1 md:grid-cols-2 gap-5`}>
+      <Section className="!mt-16">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {Skills.Groups.map((group, i) => (
-            <Reveal key={group.title} delay={0.1 + i * 0.05}>
-              <div className="h-full rounded-3xl border-2 border-accent-200 dark:border-accent-700 bg-accent-50 dark:bg-accent-800 p-6">
-                <h3 className="text-lg font-black text-accent-700 dark:text-accent-300 mb-4">
-                  {group.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
+            <Reveal key={group.title} delay={0.05 + i * 0.05} className="h-full">
+              <div className="clay h-full p-6">
+                <div className="flex items-center gap-3">
+                  <span className={`tone-${group.tone} clay-tone h-10 w-10 !rounded-[14px]`} />
+                  <h2 className="text-xl font-black text-ink">{group.title}</h2>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
                   {group.items.map((item) => (
-                    <Badge key={item}>{item}</Badge>
+                    <Badge key={item} tone={group.tone}>
+                      {item}
+                    </Badge>
                   ))}
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
-      </div>
+      </Section>
     </div>
   );
 }
