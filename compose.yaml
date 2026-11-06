@@ -1,17 +1,16 @@
-# octax.dev — static site served by nginx behind the shared Traefik proxy.
+# octax.dev: static site built into an nginx image, behind the shared Traefik proxy.
 #
-#   npm ci && npm run build        # produces ./build
-#   docker compose up -d           # serve it
+#   docker compose up -d --build     # build the site + image and (re)start
 #
-# or build inside Docker (no local Node needed):
-#   docker compose --profile build run --rm builder && docker compose up -d
+# Deploy an update:  git pull && docker compose up -d --build
 #
 # Traefik is already running on the external "proxy" network and issues
 # certificates with the "cloudflare" resolver.
 
 services:
   nginx:
-    image: nginx:alpine
+    build: .
+    image: octax-web:latest
     restart: unless-stopped
     deploy:
       resources:
@@ -23,16 +22,6 @@ services:
           memory: 32M
     expose:
       - "80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/snippets:/etc/nginx/snippets:ro
-      - ./build:/var/www/build:ro
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/healthz"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 5s
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
@@ -48,20 +37,6 @@ services:
       - "traefik.http.services.octax-web.loadbalancer.server.port=80"
     networks:
       - proxy
-
-  # One-off build of ./build inside Docker. Not started by `docker compose up`.
-  builder:
-    image: node:22-alpine
-    profiles: ["build"]
-    working_dir: /app
-    command: sh -c "npm ci --no-audit --no-fund && npm run build"
-    volumes:
-      - .:/app
-      - builder_node_modules:/app/node_modules # keep Linux deps off the host's node_modules
-    network_mode: bridge
-
-volumes:
-  builder_node_modules:
 
 networks:
   proxy:

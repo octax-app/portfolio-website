@@ -1,0 +1,16 @@
+# Keep the build context small and host-specific files out of the image.
+node_modules
+build
+.git
+.github
+.claude
+.vscode
+.idea
+.DS_Store
+*.log
+.env*
+compose.yaml
+Dockerfile
+.dockerignore
+README.md
+LICENSE
