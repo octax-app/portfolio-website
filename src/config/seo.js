@@ -80,7 +80,7 @@ export function projectLd(p) {
     ld.operatingSystem =
       p.kind === "mobile" ? [l.appStore && "iOS", l.playStore && "Android"].filter(Boolean).join(", ") || "iOS, Android" : "Web";
     if (l.appStore) ld.installUrl = l.appStore;
-    if (p.status === "live" && (l.demo || p.openSource === "public"))
+    if (["live", "beta", "alpha"].includes(p.status) && (l.demo || p.openSource === "public"))
       ld.offers = { "@type": "Offer", price: "0", priceCurrency: "USD" };
     const repos = [l.repo, l.repoIos?.href].filter(Boolean);
     if (repos.length) ld.codeRepository = repos.length === 1 ? repos[0] : repos;
@@ -170,7 +170,7 @@ export function llmsTxt() {
 
 > ${App.About.Blurb} Founded and led by ${App.Founder.Name}, based in the UAE.
 
-Octax builds its own products (OneERP, Octax Solobill, Open Pass), ships mobile apps and web platforms for clients, and publishes open-source tools under https://github.com/octax-app.
+Octax builds its own products (OneERP, Octax Solobill, Octa Pass), ships mobile apps and web platforms for clients, and publishes open-source tools under https://github.com/octax-app (Octa Pass lives under https://github.com/octap-app).
 
 ${sections}
 

@@ -25,7 +25,7 @@ function Work() {
     <div className="Work">
       <Seo
         title="Work"
-        description="The Octax catalog: OneERP, Octax Solobill, Open Pass and the mobile apps, web platforms, websites and open-source libraries we've shipped."
+        description="The Octax catalog: OneERP, Octax Solobill, Octa Pass and the mobile apps, web platforms, websites and open-source libraries we've shipped."
       />
       <PageHeader eyebrow="Catalog" tone="pink" title="The work." subtitle={Config.Work.Intro} />
 

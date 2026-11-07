@@ -53,6 +53,7 @@ const App = {
   Status: {
     live: { label: "Live", tone: "mint" },
     beta: { label: "Beta", tone: "sky" },
+    alpha: { label: "Public alpha", tone: "sky" },
     building: { label: "In the lab", tone: "amber" },
     private: { label: "Client work", tone: "violet" },
   },
@@ -146,27 +147,47 @@ const App = {
       ],
     },
     {
-      id: "openpass",
-      name: "Open Pass",
+      id: "octapass",
+      aliases: ["openpass"], // old id, so /work/openpass keeps working
+      name: "Octa Pass",
       kind: "platform",
       tone: "sky",
-      status: "building",
+      status: "alpha",
       featured: true,
-      image: "pipeline/openpass-icon.png",
-      tagline: "A free, end-to-end encrypted password manager.",
-      desc: "Passwords, passkeys and one-time codes that sync across browsers, desktop and phone, encrypted on your device so only you can open them. Built, not yet released: public launch and open source come after an independent security audit.",
-      tags: ["Rust", "React", "Native iOS", "Native Android", "Zero-knowledge"],
-      openSource: "planned",
+      image: "pipeline/octapass-icon.png",
+      tagline: "The free password manager only you can open.",
+      desc: "Passwords, passkeys, one-time codes, cards and identities that sync across every browser, phone and computer, encrypted on your device so only you can open them. Zero-knowledge by design: Argon2id, a Secret Key, per-item XChaCha20-Poly1305 keys and OPAQUE login. Free, no ads, and open source under MIT. In public alpha: create a free account in the web vault today; the browser extensions and desktop and phone apps are on their way to the stores, and 1.0 follows an independent security audit.",
+      gallery: [
+        { src: "gallery/octapass/home-light.jpg", caption: "octap.app: the product site", url: "octap.app" },
+        { src: "gallery/octapass/home-dark.jpg", caption: "octap.app in dark mode", url: "octap.app" },
+        { src: "gallery/octapass/vault.jpg", caption: "Web vault: sign in with your Secret Key" },
+        { src: "gallery/octapass/mobile.jpg", caption: "octap.app on a phone", device: "mobile" },
+      ],
+      tags: ["Rust", "React", "SwiftUI", "Kotlin", "Tauri", "Zero-knowledge"],
+      openSource: "public",
+      links: {
+        demo: {
+          label: "Open the web vault",
+          href: "https://vault.octap.app",
+          kind: "Web vault",
+          note: "Free account, encrypted on your device",
+        },
+        site: { label: "octap.app", href: "https://octap.app", note: "Product site, docs and changelog" },
+        repo: "https://github.com/octap-app/octapass",
+      },
       milestones: [
         { title: "Security design & foundations", state: "done" },
         { title: "Rust core, sync server & CLI", state: "done" },
         { title: "Browser extensions", state: "done" },
         { title: "Desktop apps", note: "macOS, Windows, Linux", state: "done" },
         { title: "Native iOS & Android apps", state: "done" },
+        { title: "Open source", note: "octap-app/octapass, MIT", state: "done" },
+        { title: "Public alpha", note: "vault.octap.app", state: "done" },
         { title: "Sharing, families & emergency access", state: "active" },
         { title: "Developer toolkit & file safe", state: "active" },
+        { title: "Apps in the stores", state: "todo" },
         { title: "Independent security audit", state: "todo" },
-        { title: "Public release & open source", state: "todo" },
+        { title: "1.0 release", state: "todo" },
       ],
     },
 
@@ -508,11 +529,11 @@ const App = {
         current: true,
         tone: "violet",
         summary:
-          "Running Octax: building our own products (OneERP, Octax Solobill, Open Pass) and shipping apps and platforms for clients.",
+          "Running Octax: building our own products (OneERP, Octax Solobill, Octa Pass) and shipping apps and platforms for clients.",
         highlights: [
           "Launched OneERP, a live ERP and auction platform, at mwsauction.com.",
           "Shipped and open-sourced Octax Solobill (web and iOS), free at inv.octax.dev.",
-          "Building Open Pass, an end-to-end encrypted password manager.",
+          "Open-sourced Octa Pass, an end-to-end encrypted password manager, now in public alpha at octap.app.",
         ],
         stack: ["Flutter", "NestJS", "Go", "React", "SwiftUI"],
       },
@@ -621,6 +642,6 @@ function matchesFilter(project, filterId) {
   return kinds.includes(project.kind);
 }
 
-const findProject = (id) => App.Catalog.find((p) => p.id === id) || null;
+const findProject = (id) => App.Catalog.find((p) => p.id === id || p.aliases?.includes(id)) || null;
 
 export { App, progressOf, matchesFilter, findProject };

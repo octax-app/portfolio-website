@@ -10,7 +10,7 @@ import Seo from "../../shared/Seo";
 function Home() {
   return (
     <div className="Home">
-      <Seo description="Octax is a product studio founded by Haitham Al-Abdullah. We design, build and run mobile apps, web platforms and open-source tools, including OneERP, Octax Solobill and Open Pass." />
+      <Seo description="Octax is a product studio founded by Haitham Al-Abdullah. We design, build and run mobile apps, web platforms and open-source tools, including OneERP, Octax Solobill and Octa Pass." />
       <Hero />
       <StatsBand />
       <CatalogPreview />

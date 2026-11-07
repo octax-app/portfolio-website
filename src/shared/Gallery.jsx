@@ -120,7 +120,7 @@ function Gallery({ project }) {
             className="group block w-full text-left"
             aria-label={`Enlarge: ${featured.caption}`}
           >
-            <BrowserFrame url={host}>
+            <BrowserFrame url={featured.url || host}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.img
                   key={featured.src}

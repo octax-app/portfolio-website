@@ -10,9 +10,9 @@ export function liveDemos() {
   const out = [];
   Config.Catalog.filter((p) => p.kind === "platform").forEach((p) => {
     const l = p.links || {};
-    if (l.demo) out.push({ project: p, ...l.demo, kind: "Demo", note: "Free to use, sign up in seconds" });
-    if (l.site) out.push({ project: p, ...l.site, kind: "Live site", note: "Customer-facing auction website" });
-    if (l.admin) out.push({ project: p, ...l.admin, kind: "Admin", note: "Staff ERP & back office" });
+    if (l.demo) out.push({ project: p, kind: "Demo", note: "Free to use, sign up in seconds", ...l.demo, icon: "play" });
+    if (l.site) out.push({ project: p, kind: "Live site", note: "Customer-facing auction website", ...l.site, icon: "external" });
+    if (l.admin) out.push({ project: p, kind: "Admin", note: "Staff ERP & back office", ...l.admin, icon: "external" });
   });
   return out;
 }
@@ -34,7 +34,7 @@ export function DemoGrid() {
                 {d.kind}
               </span>
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/35 transition-transform duration-300 ease-spring group-hover:rotate-12 group-hover:scale-110">
-                <Icon name={d.kind === "Demo" ? "play" : "external"} size={18} strokeWidth={2.4} />
+                <Icon name={d.icon} size={18} strokeWidth={2.4} />
               </span>
             </div>
             <p className="mt-6 font-display text-2xl font-black">{d.project.name}</p>

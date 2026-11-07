@@ -79,6 +79,8 @@ function AppDetails() {
 
   // Unknown id → back to the catalog
   if (!project) return <Navigate to="/work" replace />;
+  // Old id (e.g. a renamed product) → its current URL
+  if (project.id !== app) return <Navigate to={`/work/${project.id}`} replace />;
 
   const { name, tagline, desc, tags = [], tone, status, openSource, milestones } = project;
 

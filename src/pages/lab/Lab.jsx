@@ -25,7 +25,7 @@ function Lab() {
     <div className="Lab">
       <Seo
         title="Lab: progress, demos & open source"
-        description="Live progress on OneERP, Octax Solobill and Open Pass, demos you can try today, and Octax's open-source projects."
+        description="Live progress on OneERP, Octax Solobill and Octa Pass, demos you can try today, and Octax's open-source projects."
       />
       <PageHeader eyebrow="The Lab" tone="amber" title="Building in public." subtitle={Config.Lab.Intro}>
         <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">

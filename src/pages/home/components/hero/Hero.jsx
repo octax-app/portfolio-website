@@ -15,7 +15,7 @@ const spring = { type: "spring", stiffness: 220, damping: 22 };
 function HeroBoard() {
   const oneerp = findProject("oneerp");
   const mg = findProject("solobill");
-  const op = findProject("openpass");
+  const op = findProject("octapass");
 
   return (
     <div className="relative mx-auto h-[420px] w-full max-w-[460px] sm:h-[460px]">
@@ -68,24 +68,27 @@ function HeroBoard() {
       </motion.a>
 
       {/* progress card */}
-      <motion.div
+      <motion.a
+        href={op.links.site.href}
+        target="_blank"
+        rel="noreferrer"
         initial={{ opacity: 0, y: 40, rotate: -4 }}
         animate={{ opacity: 1, y: 0, rotate: -2 }}
         transition={{ ...spring, delay: 0.45 }}
         whileHover={{ rotate: 0, y: -6 }}
-        className="clay absolute bottom-2 left-[6%] w-[70%] p-5"
+        className="clay block absolute bottom-2 left-[6%] w-[70%] p-5"
       >
         <div className="flex items-center gap-3">
           <img src={`/static/images/work/${op.image}`} alt="" className="h-10 w-10 rounded-xl shadow-md" />
           <div className="min-w-0 flex-1">
-            <p className="font-display text-base font-black text-ink">Open Pass</p>
+            <p className="font-display text-base font-black text-ink">{op.name}</p>
             <StatusPill status={op.status} />
           </div>
         </div>
         <div className="mt-4">
           <ProgressBar value={progressOf(op)} tone="sky" label="Road to 1.0" height="h-3" />
         </div>
-      </motion.div>
+      </motion.a>
 
       {/* sparkle bubble */}
       <motion.span
