@@ -31,6 +31,16 @@
 
 <br>
 
+## 📦 Our products
+
+| Product | What it is | Status | Links |
+|---------|------------|--------|-------|
+| **OneERP** | ERP and live-auction platform for a vehicle-auction business | Live | [mwsauction.com](https://mwsauction.com) · [details](https://octax.dev/work/oneerp) |
+| **Octax Solobill** | Billing for solo traders who resell services, on the web and iPhone | Live · MIT | [inv.octax.dev](https://inv.octax.dev) · [web source](https://github.com/octax-app/solobill) · [iOS source](https://github.com/octax-app/solobill-ios) |
+| **Octa Pass** | The free, end-to-end encrypted password manager only you can open | Public alpha · MIT | [octap.app](https://octap.app) · [web vault](https://vault.octap.app) · [source](https://github.com/octap-app/octapass) |
+
+<br>
+
 ## 🧭 A tour of the site
 
 | | Page | Route | What lives there |
@@ -140,13 +150,16 @@ Add an entry to `App.Catalog` in [`AppConfig.js`](src/config/AppConfig.js):
   name: "Octax Solobill",
   kind: "platform",               // platform | mobile | webapp | website | library | community
   tone: "violet",                 // violet | pink | amber | mint | sky | coral
-  status: "live",                 // live | beta | building | private
+  aliases: ["old-id"],            // optional, after a rename: /work/old-id redirects here
+  status: "live",                 // live | beta | alpha | building | private
   openSource: "public",           // public | in-progress | planned (optional)
   featured: true,
   tagline: "Billing for solo traders who resell services.",
   tags: ["TypeScript", "React", "Hono", "SQLite"],
   links: {
     demo: { label: "Try it free", href: "https://inv.octax.dev" },
+    // demo / site / admin also take an optional `kind` and `note` for their
+    // live-demo card, e.g. { …, kind: "Web vault", note: "Free account" }
     repo: "https://github.com/octax-app/solobill",
     repoIos: {                    // optional second repo for the iOS app
       label: "iOS source",
@@ -166,7 +179,7 @@ Store buttons, status pills, open-source badges and filters all appear automatic
 **Images**
 
 - Mobile screenshots: `public/static/images/work/apps/<id>/screenshot_<n>_<light|dark>.webp`
-- Gallery shots: `public/static/images/work/gallery/<id>/…`, listed under the project's `gallery`
+- Gallery shots: `public/static/images/work/gallery/<id>/…`, listed under the project's `gallery` as `{ src, caption }`. Add `device: "mobile"` for a phone frame, or `url: "octap.app"` to show a different address in the browser frame than the project's main link
 - Missing images show a "preview coming soon" placeholder, so you can add them later.
 
 <br>
